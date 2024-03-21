@@ -1,4 +1,4 @@
-<img width="15%" src="assets/icon.png" align="right" alt="Icon">
+<img width="16%" src="assets/icon.png" align="right" alt="Icon">
 <br>
 
 # Project for VAJ (Express REST with React)
