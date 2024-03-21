@@ -1,0 +1,23 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.navbar {
+  padding-bottom: 0;
+}
+
+.navbar > div {
+  padding: 0.25rem;
+  border-bottom: 2px solid #ccc;
+}
+
+.container {
+  background-color: #eee;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.container.page {
+  padding: 1rem;
+}
