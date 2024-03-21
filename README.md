@@ -48,7 +48,12 @@ Selected theme of this project, were pokemons. Using REST we are able to do basi
 ## Instalation
 Express JS (REST API)
 ```
-TODO
+npm install
+npx prisma migrate dev --name init
+npm run start
+
+npx prisma studio -- Use to start database browsing
+npx prisma migrate reset -- Use only to reset database
 ```
 
 React (Single Page)
@@ -123,8 +128,8 @@ TODO
     "height": 0.3,
     "image": "https://example.com/images/eevee.jpg",
     "actions": [2],
-    "trainerId": 1
+    "trainer": 1
 }
 ```
-**POST - http://localhost:3000/trainers/1/catch/1 ** - *Catches new pokemon*
+**POST - http://localhost:3000/trainers/1/catch/1 ** - *Catches new pokemon* <br>
 **POST - http://localhost:3000/trainers/1/release/1 ** - *Releases pokemon*

@@ -123,19 +123,6 @@ router.get('/:id', async function (req, res, next) {
     }
 });
 
-/**
- * {
- *     "name": "Eevee",
- *     "type": "Normal",
- *     "description": "Eevee has an unstable genetic makeup that suddenly mutates due to the environment in which it lives. Radiation from various stones causes this Pokémon to evolve.",
- *     "weight": 6.5,
- *     "height": 0.3,
- *     "image": "https://example.com/images/eevee.jpg",
- *     "actions": [2],
- *     "trainerId": 1
- * }
- */
-
 // POST new pokemon
 router.post('/', async function (req, res, next) {
     try {
@@ -187,7 +174,7 @@ router.post('/', async function (req, res, next) {
         let pokemon = Pokemon.fromDatabase(pokemonData);
         delete pokemon.trainer;
 
-        pokemon.trainerId = pokemonData.trainerId ? pokemonData.trainerId : null;
+        pokemon.trainerId = pokemonData.trainer ? pokemonData.trainer : null;
         pokemon.actions = {
             connect: pokemon.actions.map(action => {
                 return {id: action};
