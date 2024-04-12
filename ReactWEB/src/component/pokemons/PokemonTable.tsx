@@ -1,6 +1,13 @@
 import React from "react";
 import { DataGrid, GridActionsCellItem, GridColDef, GridEventListener, GridRowEditStopReasons, GridRowId, GridRowModel, GridRowModes, GridRowModesModel, GridRowsProp, GridSlots, GridToolbarContainer } from "@mui/x-data-grid";
-import { Box, Button } from "@mui/material";
+import { Box, Button, ButtonGroup, Dialog, FormControl, FormHelperText, Input, InputLabel, OutlinedInput, TextField } from "@mui/material";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -8,102 +15,58 @@ import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Cancel";
 
 import { Pokemon } from "../../types/app";
-/*
-const PokemonTable = () => {
-  let columns = [
-    {
-      field: "id",
-      headerName: "ID",
-      width: 50,
-    },
-    {
-      field: "name",
-      headerName: "Name",
-      width: 150,
-    },
-    {
-      field: "type",
-      headerName: "Type",
-      width: 150,
-    },
-    {
-      field: "description",
-      headerName: "Description",
-      flex: 1,
-    },
-    {
-      field: "actions",
-      headerName: "ActionsID",
-      width: 75,
-    },
-    {
-      field: "trainer",
-      headerName: "TrainerID",
-      width: 75,
-    }
-  ];
 
-  const [rows, setData] = React.useState([]);
+function handleEditClick(id: GridRowId) {
   
-  React.useEffect(() => {
-    fetch("http://localhost:3000/pokemons?lazy=true")
-      .then((response) => response.json())
-      .then((data) => {
-        setData(data.entries);
-        console.log(data.entries);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }, []);
-
-  return (
-    <div style={{ height: 400, width: "100%" }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: 5,
-            },
-          },
-        }}
-        pageSizeOptions={[5]}
-        disableRowSelectionOnClick
-      />
-    </div>
-  );
-};
-
-export default PokemonTable;
-*/
-
-interface EditToolbarProps {
-  setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
-  setRowModesModel: (
-    newModel: (oldModel: GridRowModesModel) => GridRowModesModel,
-  ) => void;
 }
 
-function EditToolbar(props: EditToolbarProps) {
-  const { setRows, setRowModesModel } = props;
+function handleDeleteClick(id: GridRowId) {
+  
+}
 
-  const handleClick = () => {
-    const id = 0;
-    setRows((oldRows) => [...oldRows, { id, name: '', age: '', isNew: true }]);
-    setRowModesModel((oldModel) => ({
-      ...oldModel,
-      [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
-    }));
-  };
-
+function BasicTable(props: { rows: Pokemon[] }) {
+  console.log(props.rows);
   return (
-    <GridToolbarContainer>
-      <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
-        Add record
-      </Button>
-    </GridToolbarContainer>
+    <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell align="center">ID</TableCell>
+            <TableCell align="left">Name</TableCell>
+            <TableCell align="left">Type</TableCell>
+            <TableCell align="left">Description</TableCell>
+            <TableCell align="center">Height</TableCell>
+            <TableCell align="center">Weight</TableCell>
+            <TableCell align="center">ActionsID</TableCell>
+            <TableCell align="center">TrainerID</TableCell>
+            <TableCell align="center">Options</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {props.rows.map((row) => (
+            <TableRow
+              key={row.name}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell align="center">{row.id}</TableCell>
+              <TableCell align="left">{row.name}</TableCell>
+              <TableCell align="left">{row.type}</TableCell>
+              <TableCell align="left">{row.description}</TableCell>
+              <TableCell align="center">{row.height}</TableCell>
+              <TableCell align="center">{row.weight}</TableCell>
+              <TableCell align="center">{row.actions}</TableCell>
+              <TableCell align="center">{row.trainer}</TableCell>
+              <TableCell align="center">
+                <ButtonGroup>
+                  <Button startIcon={<EditIcon />} onClick={() => handleEditClick(row.id)}></Button>
+                  <Button startIcon={<DeleteIcon />} onClick={() => handleDeleteClick(row.id)}></Button>
+                </ButtonGroup>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 }
 
@@ -135,6 +98,18 @@ export default function PokemonTable() {
       editable: true,
     },
     {
+      field: "height",
+      headerName: "Height",
+      width: 75,
+      editable: true,
+    },
+    {
+      field: "weight",
+      headerName: "Weight",
+      width: 75,
+      editable: true,
+    },
+    {
       field: "actions",
       headerName: "ActionsID",
       width: 75,
@@ -153,28 +128,6 @@ export default function PokemonTable() {
       width: 100,
       cellClassName: 'actions',
       getActions: ({ id }) => {
-        const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
-  
-        if (isInEditMode) {
-          return [
-            <GridActionsCellItem
-              icon={<SaveIcon />}
-              label="Save"
-              sx={{
-                color: 'primary.main',
-              }}
-              onClick={handleSaveClick(id)}
-            />,
-            <GridActionsCellItem
-              icon={<CancelIcon />}
-              label="Cancel"
-              className="textPrimary"
-              onClick={handleCancelClick(id)}
-              color="inherit"
-            />,
-          ];
-        }
-  
         return [
           <GridActionsCellItem
             icon={<EditIcon />}
@@ -193,34 +146,36 @@ export default function PokemonTable() {
       },
     },
   ];
-  
-  let rows: GridRowsProp = [];
-  
-  const [tmpRows, setRows] = React.useState(rows);
+
+  let initData: GridRowsProp = [];
+  const [rows, setRows] = React.useState(initData);
+  const [open, setOpen] = React.useState(false);
+
+  const handleDeleteClick = (id: GridRowId) => () => {
+    setRows(rows.filter((row) => row.id !== id));
+    fetch(`http://localhost:3000/pokemons/${id}`, { method: "DELETE" })
+      .then((response) => response.json())
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
+  const handleEditClick = (id: GridRowId) => () => {
+    setOpen(true);
+  }
 
   React.useEffect(() => {
     fetch("http://localhost:3000/pokemons?lazy=true")
       .then((response) => response.json())
       .then((data) => {
         setRows(data.entries);
-        console.log(data.entries);
       })
       .catch((error) => {
         console.error("Error:", error);
       });
   }, []);
-  const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>({});
 
-  const handleRowEditStop: GridEventListener<'rowEditStop'> = (params, event) => {
-    if (params.reason === GridRowEditStopReasons.rowFocusOut) {
-      event.defaultMuiPrevented = true;
-    }
-  };
-
-  const handleEditClick = (id: GridRowId) => () => {
-    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
-  };
-
+  /*
   const handleSaveClick = (id: GridRowId) => () => {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
     let data = tmpRows.find((row) => row.id === id);
@@ -234,69 +189,48 @@ export default function PokemonTable() {
         console.error("Error:", error);
       });
   };
-
-  const handleDeleteClick = (id: GridRowId) => () => {
-    setRows(tmpRows.filter((row) => row.id !== id));
-    fetch(`http://localhost:3000/pokemons/${id}`, {method: "DELETE"})
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
-
-  const handleCancelClick = (id: GridRowId) => () => {
-    setRowModesModel({
-      ...rowModesModel,
-      [id]: { mode: GridRowModes.View, ignoreModifications: true },
-    });
-
-    const editedRow = tmpRows.find((row) => row.id === id);
-    if (editedRow!.isNew) {
-      setRows(tmpRows.filter((row) => row.id !== id));
-    }
-  };
-
-  const processRowUpdate = (newRow: GridRowModel) => {
-    const updatedRow = { ...newRow, isNew: false };
-    setRows(tmpRows.map((row) => (row.id === newRow.id ? updatedRow : row)));
-    return updatedRow;
-  };
-
-  const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {
-    setRowModesModel(newRowModesModel);
-  };
+  */
 
   return (
-    <Box
-      sx={{
-        height: 500,
-        width: '100%',
-        '& .actions': {
-          color: 'text.secondary',
-        },
-        '& .textPrimary': {
-          color: 'text.primary',
-        },
-      }}
-    >
-      <DataGrid
-        rows={tmpRows}
-        columns={columns}
-        editMode="row"
-        rowModesModel={rowModesModel}
-        onRowModesModelChange={handleRowModesModelChange}
-        onRowEditStop={handleRowEditStop}
-        processRowUpdate={processRowUpdate}
-        slots={{
-          toolbar: EditToolbar as GridSlots['toolbar'],
+    <>
+      <Box sx={{
+          height: 500,
+          width: '100%',
+          '& .actions': {
+            color: 'text.secondary',
+          },
+          '& .textPrimary': {
+            color: 'text.primary',
+          },
         }}
-        slotProps={{
-          toolbar: { setRows, setRowModesModel },
-        }}
-      />
-    </Box>
+      >
+        <BasicTable rows={rows.map(row => row as Pokemon)} />
+      </Box>
+      <Dialog open={open} onClose={() => setOpen(false)}>
+        <Box>
+          <h1>Edit Pokemon</h1>
+          <form>
+            <FormControl>
+              <InputLabel htmlFor="component-outlined">Name</InputLabel>
+              <OutlinedInput
+                id="component-outlined"
+                defaultValue="Composed TextField"
+                label="Name"
+              />
+            </FormControl>
+            <TextField
+              id="filled-multiline-static"
+              label="Multiline"
+              multiline
+              rows={4}
+              defaultValue="Default Value"
+              variant="filled"
+            />
+            <Button variant="contained" color="primary" startIcon={<SaveIcon />} type="submit">Save</Button>
+            <Button variant="contained" color="secondary" startIcon={<CancelIcon />} type="button" onClick={() => setOpen(false)}>Cancel</Button>
+          </form>
+        </Box>
+      </Dialog>
+    </>
   );
 }

@@ -158,7 +158,7 @@ async function main() {
     {
       id: 5,
       name: "Lucario",
-      type: "Fighting/Steel",
+      type: "Fighting",
       description:
         "It has the ability to sense the Auras of all things. It understands human speech.",
       weight: 54.0,
