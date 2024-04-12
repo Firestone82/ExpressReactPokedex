@@ -55,8 +55,7 @@ class Pokemon {
       pokemon.type &&
       pokemon.description &&
       pokemon.weight &&
-      pokemon.height &&
-      pokemon.image
+      pokemon.height
     );
   }
 }

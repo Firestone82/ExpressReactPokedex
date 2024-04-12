@@ -26,6 +26,8 @@ router.get("/", async function (req, res, next) {
           type: true,
           description: true,
           createdAt: true,
+          weight: true,
+          height: true,
           actions: {
             select: {
               // Select only the id
