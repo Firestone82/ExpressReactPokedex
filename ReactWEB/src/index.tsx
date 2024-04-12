@@ -11,17 +11,17 @@ import Trainers from "./pages/trainers"
 import Index from "./pages/index";
 
 const root = ReactDOM.createRoot(
-    document.getElementById('root') as HTMLElement
+	document.getElementById('root') as HTMLElement
 );
 
 root.render(
-    <BrowserRouter>
-        <Routes>
-            <Route path="/pokemons" element={<Pokemons/>} />
-            <Route path="/trainers" element={<Trainers/>} />
-            <Route path="/" element={<Index/>} />
-        </Routes>
-    </BrowserRouter>
+	<BrowserRouter>
+		<Routes>
+			<Route path="/pokemons" element={<Pokemons/>} />
+			<Route path="/trainers" element={<Trainers/>} />
+			<Route path="/" element={<Index/>} />
+		</Routes>
+	</BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
