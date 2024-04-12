@@ -47,17 +47,19 @@ Selected theme of this project, were pokemons. Using REST we are able to do basi
 
 ## Instalation
 Express JS (REST API)
-```
+```bash
 npm install
 npx prisma migrate dev --name init
 npm run start
-
+npx prisma migrate reset -- Only for the first time
+```
+```bash
 npx prisma studio -- Use to start database browsing
 npx prisma migrate reset -- Use only to reset database
 ```
 
 React (Single Page)
-```
+```bash
 TODO
 ```
 
