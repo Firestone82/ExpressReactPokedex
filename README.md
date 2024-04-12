@@ -51,7 +51,6 @@ Express JS (REST API)
 npm install
 npx prisma migrate dev --name init
 npm run start
-npx prisma migrate reset -- Only for the first time
 ```
 ```bash
 npx prisma studio -- Use to start database browsing
@@ -60,11 +59,12 @@ npx prisma migrate reset -- Use only to reset database
 
 React (Single Page)
 ```bash
-TODO
+npm install
+npm run start
 ```
 
 ## API Usage / Examples
-**GET - http://localhost:3000/pokemons?lazy=true** - *Returns paginated lazy entries*
+**GET -** http://localhost:3000/pokemons?lazy=true - *Returns paginated lazy entries*
 ```json
 {
     "entries": [
@@ -89,7 +89,7 @@ TODO
     }
 }
 ```
-**GET - http://localhost:3000/pokemons/1** - *Returns single entry*
+**GET -** http://localhost:3000/pokemons/1 - *Returns single entry*
 ```json
 {
     "id": 1,
@@ -120,7 +120,7 @@ TODO
     }
 }
 ```
-**POST - http://localhost:3000/pokemons** - *Creates mew pokemon*
+**POST -**  http://localhost:3000/pokemons - *Creates mew pokemon*
 ```json
 {
     "name": "Eevee",
@@ -133,5 +133,5 @@ TODO
     "trainer": 1
 }
 ```
-**POST - http://localhost:3000/trainers/1/catch/1 ** - *Catches new pokemon* <br>
-**POST - http://localhost:3000/trainers/1/release/1 ** - *Releases pokemon*
+**POST -** http://localhost:3000/trainers/1/catch/1 - *Catches new pokemon* <br>
+**POST -** http://localhost:3000/trainers/1/release/1 - *Releases pokemon*
