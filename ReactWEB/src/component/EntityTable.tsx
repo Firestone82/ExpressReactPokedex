@@ -3,41 +3,43 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import TableFooter from "@mui/material/TableFooter";
-import { Pokemon, api } from "../../types/app";
+import { Pokemon, Trainer, Entity, api } from "../types/app";
 import axios from "axios";
 import { Stack, TableRow } from "@mui/material";
 import { useSnackbar } from "notistack";
-import PokemonForm from "./PokemonForm";
+import PokemonForm from "./pokemon/PokemonForm";
 import Button from "@mui/material/Button";
 import SystemUpdateAltIcon from "@mui/icons-material/SystemUpdateAlt";
 import CatchingPokemonIcon from "@mui/icons-material/CatchingPokemon";
-import PokemonTableRow from "./PokemonTableRow";
-import PokemonTableHeader from "./PokemonTableHeader";
-import PokemonPagination from "./PokemonPagination";
+import PokemonTableRow from "./pokemon/PokemonTableRow";
+import PokemonTableHeader from "./pokemon/PokemonTableHeader";
+import PokemonPagination from "./pokemon/PokemonPagination";
+import PokemonInfo from "./pokemon/PokemonInfo";
 
-async function requestAPI(page: number, rowsPerPage: number) {
+async function requestAPI(entityType: string, page: number, rowsPerPage: number) {
   return axios
     .get(
-      `${api}/pokemons?page=${page}&limit=${rowsPerPage}&lazy=true`,
+      `${api}/${entityType}?page=${page}&limit=${rowsPerPage}&lazy=true`,
     )
     .then((response) => {
       return response.data;
     });
 }
 
-export default function PokemonTable() {
+export default function EntityTable(props:{entityType: string}) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [rows, setRows] = React.useState([] as Pokemon[]);
+  const [rows, setRows] = React.useState([] as Entity[]);
   const [totalRows, setTotalRows] = React.useState(0);
   const [editFormOpen, setEditFormOpen] = React.useState(false);
-  const [pokemon, setPokemon] = React.useState({} as Pokemon);
+  const [infoFormOpen, setInfoFormOpen] = React.useState(false);
+  const [entity, setEntity] = React.useState({} as Entity);
   const { enqueueSnackbar } = useSnackbar();
 
   // Fetch data from the server.
   React.useEffect(() => {
-    requestAPI(page * rowsPerPage, rowsPerPage).then(data => {
-      setRows(data.entries as Pokemon[]);
+    requestAPI(props.entityType, page * rowsPerPage, rowsPerPage).then(data => {
+      setRows(data.entries as Entity[]);
       setTotalRows(data.pagination.total);
     });
   }, []);
@@ -51,8 +53,8 @@ export default function PokemonTable() {
   ) => {
     setPage(newPage);
 
-    requestAPI(newPage * rowsPerPage, rowsPerPage).then(data => {
-      setRows(data.entries as Pokemon[]);
+    requestAPI(props.entityType, newPage * rowsPerPage, rowsPerPage).then(data => {
+      setRows(data.entries as Entity[]);
       setTotalRows(data.pagination.total);
     });
   };
@@ -63,29 +65,29 @@ export default function PokemonTable() {
     const newRowsPerPage = parseInt(event.target.value, 10);
     setRowsPerPage(newRowsPerPage);
 
-    requestAPI(page, newRowsPerPage).then(data => {
-      setRows(data.entries as Pokemon[]);
+    requestAPI(props.entityType, page, newRowsPerPage).then(data => {
+      setRows(data.entries as Entity[]);
       setTotalRows(data.pagination.total);
     });
   };
 
   const handleDeleteButtonClick = (id: number) => {
-    axios.delete(`${api}/pokemons/${id}`).then((response) => {
+    axios.delete(`${api}/${props.entityType}/${id}`).then((response) => {
       const status = response.status;
 
       if (status === 200) {
-        requestAPI(page, rowsPerPage).then(data => {
-          setRows(data.entries as Pokemon[]);
+        requestAPI(props.entityType, page, rowsPerPage).then(data => {
+          setRows(data.entries as Entity[]);
           setTotalRows(data.pagination.total);
         });
 
-        enqueueSnackbar("Pokémon deleted successfully!", {
+        enqueueSnackbar("Deleted successfully!", {
           variant: "error",
           autoHideDuration: 1500,
           anchorOrigin: { vertical: "top", horizontal: "right" },
         });
       } else {
-        enqueueSnackbar("Failed to delete Pokémon!", {
+        enqueueSnackbar("Failed to delete!", {
           variant: "error",
           autoHideDuration: 1500,
           anchorOrigin: { vertical: "top", horizontal: "right" },
@@ -96,20 +98,26 @@ export default function PokemonTable() {
 
   const handleEditButtonClick = (id: number) => {
     console.log("Edit button clicked for id:", id);
-    setPokemon(rows.filter((row) => row.id === id)[0]);
+    setEntity(rows.filter((row) => row.id === id)[0]);
     setEditFormOpen(true);
   };
 
+  const handleInfoButtonClick = (id: number) => {
+    console.log("Info button clicked for id:", id);
+    setEntity(rows.filter((row) => row.id === id)[0]);
+    setInfoFormOpen(true);
+  }
+
   const handleCreateNewButtonClick = () => {
     console.log("Create new button clicked");
-    setPokemon({} as Pokemon);
+    setEntity({} as Entity);
     setEditFormOpen(true);
   };
 
   const handleFormSubmitFinish = () => {
-    requestAPI(page, rowsPerPage).then((data) => {
+    requestAPI(props.entityType, page, rowsPerPage).then((data) => {
       setTotalRows(data.pagination.total);
-      setRows(data.entries as Pokemon[]);
+      setRows(data.entries as Entity[]);
     });
   };
 
@@ -146,6 +154,7 @@ export default function PokemonTable() {
               <PokemonTableRow
                 key={row.name}
                 row={row}
+                onInfo={handleInfoButtonClick}
                 onEdit={handleEditButtonClick}
                 onDelete={handleDeleteButtonClick}
               />
@@ -167,11 +176,18 @@ export default function PokemonTable() {
           </TableFooter>
         </Table>
       </TableContainer>
+      {infoFormOpen && (
+        <PokemonInfo
+          openState={infoFormOpen}
+          setStateFunc={setInfoFormOpen}
+          pokemon={entity as Pokemon}
+        />
+      )}
       {editFormOpen && (
         <PokemonForm
           openState={editFormOpen}
           setStateFunc={setEditFormOpen}
-          pokemon={pokemon}
+          pokemon={entity as Pokemon}
           tableReloadFunc={handleFormSubmitFinish}
         />
       )}

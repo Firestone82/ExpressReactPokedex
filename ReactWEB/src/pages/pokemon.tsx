@@ -1,5 +1,5 @@
 import React from "react";
-import PokemonTable from "../component/pokemon/PokemonTable";
+import EntityTable from "../component/EntityTable";
 import { Paper, Stack } from "@mui/material";
 
 const Pokemon = () => {
@@ -7,11 +7,11 @@ const Pokemon = () => {
     <Stack spacing={2}>
       <Paper elevation={3} sx={{ px: 2, py: 1 }}>
         <h1>Pokémon</h1>
-        <p>Here you can find all the Pokémon</p>
+        <p>Here are all your tracked Pokémon!</p>
       </Paper>
 
       <Paper elevation={3} sx={{ padding: 1 }}>
-        <PokemonTable />
+        <EntityTable entityType="pokemons" />
       </Paper>
     </Stack>
   );

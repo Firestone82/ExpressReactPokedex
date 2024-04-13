@@ -7,7 +7,7 @@ export default function FooterComponent() {
     <Paper elevation={3} sx={{ my: 2, px: 2, py: 1 }}>
       <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
         <Box gridColumn="span 6">
-          <p>© {new Date().getFullYear()} - ExpressReactPokedex</p>
+          <p>© {new Date().getFullYear()} - ExpressReactPokédex</p>
         </Box>
 
         <Box gridColumn="span 6">

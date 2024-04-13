@@ -29,3 +29,10 @@ export enum PokemonType {
   FAIRY = "Fairy",
   NORMAL = "Normal",
 }
+
+export type Trainer = {
+  id: number;
+  name: string;
+};
+
+export type Entity = Trainer | Pokemon;
