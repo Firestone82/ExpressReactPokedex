@@ -231,7 +231,7 @@ async function main() {
       weight: 90.5,
       height: 1.7,
       createdAt: "2024-03-21T00:00:00Z",
-      trainerId: 5,
+      trainerId: 4,
       actions: {
         connect: [
           { id: 2 },
