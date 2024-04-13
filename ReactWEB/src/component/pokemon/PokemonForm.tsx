@@ -148,7 +148,7 @@ function PokemonForm(props: {
                   <em>None</em>
                 </MenuItem>
                 {Object.values(PokemonType).map((type) => (
-                  <MenuItem value={type}>{type}</MenuItem>
+                  <MenuItem key={type} value={type}>{type}</MenuItem>
                 ))}
               </Select>
             </FormControl>

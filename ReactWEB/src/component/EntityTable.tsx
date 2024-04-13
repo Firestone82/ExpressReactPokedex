@@ -179,13 +179,15 @@ export default function EntityTable(props:{entityType: string}) {
             )}
           </TableBody>
           <TableFooter>
-            <EntityPagination
-              count={totalRows}
-              page={page}
-              rowsPerPage={rowsPerPage}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
+            <TableRow>
+              <EntityPagination
+                count={totalRows}
+                page={page}
+                rowsPerPage={rowsPerPage}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            </TableRow>
           </TableFooter>
         </Table>
       </TableContainer>
