@@ -40,4 +40,28 @@ router.get("/", async function (req, res, next) {
   }
 });
 
+// GET action by id
+router.get("/:id", async function (req, res, next) {
+  try {
+    const id = parseInt(req.params.id);
+    const entry = await prisma.action.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        pokemon: false,
+      },
+    });
+
+    if (entry) {
+      res.status(200).json(entry);
+    } else {
+      res.status(404).json({ error: "Action not found" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "We are sorry, but something went wrong" });
+  }
+});
+
 module.exports = router;

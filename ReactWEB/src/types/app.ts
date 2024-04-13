@@ -37,4 +37,12 @@ export type Trainer = {
   pokemon: number[];
 };
 
+export type Action = {
+    id: number;
+    name: string;
+    type: PokemonType;
+    description: string;
+    damage: number;
+}
+
 export type Entity = Trainer | Pokemon;
