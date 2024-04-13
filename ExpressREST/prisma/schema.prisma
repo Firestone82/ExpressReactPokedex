@@ -30,7 +30,7 @@ model Action {
   description String
   damage      Int
   createdAt   DateTime @default(now())
-  pokemons    Pokemon[] @relation("PokemonActions")
+  pokemon    Pokemon[] @relation("PokemonActions")
 }
 
 model Trainer {
@@ -40,5 +40,5 @@ model Trainer {
   password    String
   createdAt   DateTime @default(now())
   deletedAt   DateTime?
-  pokemons    Pokemon[]
+  pokemon    Pokemon[]
 }

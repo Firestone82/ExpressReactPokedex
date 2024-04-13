@@ -86,7 +86,7 @@ async function main() {
     },
   ];
 
-  const pokemons = [
+  const pokemon = [
     {
       id: 1,
       name: "Pikachu",
@@ -181,9 +181,9 @@ async function main() {
     });
   }
 
-  for (const pokemon of pokemons) {
+  for (const pok of pokemon) {
     await prisma.pokemon.create({
-      data: pokemon,
+      data: pok,
     });
   }
 

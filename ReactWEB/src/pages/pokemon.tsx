@@ -11,7 +11,7 @@ const Pokemon = () => {
       </Paper>
 
       <Paper elevation={3} sx={{ padding: 1 }}>
-        <EntityTable entityType="pokemons" />
+        <EntityTable entityType="pokemon" />
       </Paper>
     </Stack>
   );

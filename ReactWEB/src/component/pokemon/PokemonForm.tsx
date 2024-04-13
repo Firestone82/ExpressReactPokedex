@@ -30,7 +30,6 @@ function PokemonForm(props: {
       name: "",
       type: "",
       description: "",
-      actions: [],
       trainer: 0,
       weight: 0,
       height: 0,
@@ -40,7 +39,6 @@ function PokemonForm(props: {
   const [name, setName] = useState(pokemon.name || "");
   const [type, setType] = useState((pokemon.type as PokemonType) || "");
   const [description, setDescription] = useState(pokemon.description || "");
-  const [actions, setActions] = useState(pokemon.actions || []);
   const [trainer, setTrainer] = useState(pokemon.trainer || "");
   const [weight, setWeight] = useState(pokemon.weight || "");
   const [height, setHeight] = useState(pokemon.height || "");
@@ -58,15 +56,14 @@ function PokemonForm(props: {
       name: name,
       type: type,
       description: description,
-      actions: actions,
       trainer: trainer,
       weight: weight,
       height: height,
     };
 
     const method = pokemonID == undefined ? "post" : "put";
-    const urlEdit = `${api}/pokemons/${pokemonID}`;
-    const urlCreate = `${api}/pokemons`;
+    const urlEdit = `${api}/pokemon/${pokemonID}`;
+    const urlCreate = `${api}/pokemon`;
 
     axios({
       method: method,

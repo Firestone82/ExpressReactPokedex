@@ -1,12 +1,12 @@
 class Trainer {
-  constructor(id, name, email, password, createdAt, deletedAt, pokemons = []) {
+  constructor(id, name, email, password, createdAt, deletedAt, pokemon = []) {
     this.id = id;
     this.name = name;
     this.email = email;
     this.password = password;
     this.createdAt = createdAt;
     this.deletedAt = deletedAt;
-    this.pokemons = pokemons;
+    this.pokemon = pokemon;
   }
 
   static fromDatabase(entry) {
@@ -17,14 +17,14 @@ class Trainer {
       entry.password,
       entry.createdAt,
       entry.deletedAt || null,
-      entry.pokemons || [],
+      entry.pokemon || [],
     );
   }
 
   static toJSON(lazy = false) {
     return (entry) => {
       if (lazy) {
-        entry.pokemons = entry.pokemons.map((pokemon) => pokemon.id);
+        entry.pokemon = entry.pokemon.map((pokemon) => pokemon.id);
       }
 
       return entry;

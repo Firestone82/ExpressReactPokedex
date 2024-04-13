@@ -19,7 +19,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/pokemons", pokemonRouter);
+app.use("/pokemon", pokemonRouter);
 app.use("/actions", actionRouter);
 app.use("/trainers", trainerRouter);
 

@@ -7,14 +7,16 @@ import { Pokemon, Trainer, Entity, api } from "../types/app";
 import axios from "axios";
 import { Stack, TableRow } from "@mui/material";
 import { useSnackbar } from "notistack";
-import PokemonForm from "./pokemon/PokemonForm";
 import Button from "@mui/material/Button";
 import SystemUpdateAltIcon from "@mui/icons-material/SystemUpdateAlt";
 import CatchingPokemonIcon from "@mui/icons-material/CatchingPokemon";
+import EntityPagination from "./EntityPagination";
 import PokemonTableRow from "./pokemon/PokemonTableRow";
 import PokemonTableHeader from "./pokemon/PokemonTableHeader";
-import PokemonPagination from "./pokemon/PokemonPagination";
+import PokemonForm from "./pokemon/PokemonForm";
 import PokemonInfo from "./pokemon/PokemonInfo";
+import TrainersTableRow from "./trainers/TrainersTableRow";
+import TrainersTableHeader from "./trainers/TrainersTableHeader";
 
 async function requestAPI(entityType: string, page: number, rowsPerPage: number) {
   return axios
@@ -145,19 +147,30 @@ export default function EntityTable(props:{entityType: string}) {
 
       <TableContainer>
         <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
-          <PokemonTableHeader />
+          {props.entityType === "pokemon" ? (
+            <PokemonTableHeader />
+          ) : (
+            <TrainersTableHeader />
+          )}
           <TableBody>
-          {(rowsPerPage > 0
-            ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : rows
-          ).map((row) => (
-              <PokemonTableRow
-                key={row.name}
-                row={row}
-                onInfo={handleInfoButtonClick}
-                onEdit={handleEditButtonClick}
-                onDelete={handleDeleteButtonClick}
-              />
+            {(rowsPerPage > 0
+              ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              : rows
+            ).map((row) => (
+              props.entityType === "pokemon" ? (
+                <PokemonTableRow
+                  key={row.name}
+                  row={row as Pokemon}
+                  onInfo={handleInfoButtonClick}
+                  onEdit={handleEditButtonClick}
+                  onDelete={handleDeleteButtonClick}
+                />
+              ) : (
+                <TrainersTableRow
+                  key={row.name}
+                  row={row as Trainer}
+                />
+              )
             ))}
             {emptyRows > 0 && (
               <TableRow style={{ height: 73 * emptyRows }}>
@@ -166,7 +179,7 @@ export default function EntityTable(props:{entityType: string}) {
             )}
           </TableBody>
           <TableFooter>
-            <PokemonPagination
+            <EntityPagination
               count={totalRows}
               page={page}
               rowsPerPage={rowsPerPage}

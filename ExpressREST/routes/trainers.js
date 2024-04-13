@@ -26,7 +26,7 @@ router.get("/", async function (req, res, next) {
           password: true,
           createdAt: true,
           deletedAt: true,
-          pokemons: {
+          pokemon: {
             select: {
               // Select only the id
               id: true,
@@ -39,7 +39,7 @@ router.get("/", async function (req, res, next) {
     } else {
       entries = await prisma.trainer.findMany({
         include: {
-          pokemons: true,
+          pokemon: true,
         },
         take: limit,
         skip: offset,
@@ -84,7 +84,7 @@ router.get("/:id", async function (req, res, next) {
           password: true,
           createdAt: true,
           deletedAt: true,
-          pokemons: {
+          pokemon: {
             select: {
               // Select only the id
               id: true,
@@ -98,7 +98,7 @@ router.get("/:id", async function (req, res, next) {
           id: id,
         },
         include: {
-          pokemons: true,
+          pokemon: true,
         },
       });
     }
@@ -129,15 +129,15 @@ router.post("/:id/catch/:pokemon", async function (req, res, next) {
         deletedAt: null,
       },
       include: {
-        pokemons: true,
+        pokemon: true,
       },
     });
 
     if (trainer) {
       trainer = Trainer.fromDatabase(trainer);
 
-      if (trainer.pokemons.length >= 6) {
-        res.status(400).json({ error: "Trainer can have max 6 pokemons!" });
+      if (trainer.pokemon.length >= 6) {
+        res.status(400).json({ error: "Trainer can have max 6 pokemon!" });
         return;
       }
     } else {
@@ -173,7 +173,7 @@ router.post("/:id/catch/:pokemon", async function (req, res, next) {
         id: trainerId,
       },
       data: {
-        pokemons: {
+        pokemon: {
           connect: {
             id: pokemonId,
           },
@@ -206,7 +206,7 @@ router.post("/:id/release/:pokemon", async function (req, res, next) {
         deletedAt: null,
       },
       include: {
-        pokemons: true,
+        pokemon: true,
       },
     });
 
@@ -245,7 +245,7 @@ router.post("/:id/release/:pokemon", async function (req, res, next) {
         id: trainerId,
       },
       data: {
-        pokemons: {
+        pokemon: {
           disconnect: {
             id: pokemonId,
           },

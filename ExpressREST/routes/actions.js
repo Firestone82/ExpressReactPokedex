@@ -16,7 +16,7 @@ router.get("/", async function (req, res, next) {
       take: limit,
       skip: offset,
       include: {
-        pokemons: false,
+        pokemon: false,
       },
     });
 

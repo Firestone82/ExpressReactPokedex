@@ -5,7 +5,6 @@ export type Pokemon = {
   name: string;
   type: string;
   description: string;
-  actions: [];
   trainer: number;
   weight: number;
   height: number;
@@ -33,6 +32,8 @@ export enum PokemonType {
 export type Trainer = {
   id: number;
   name: string;
+  email: string;
+  pokemon: number[];
 };
 
 export type Entity = Trainer | Pokemon;

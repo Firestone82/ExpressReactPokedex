@@ -7,7 +7,7 @@ const { Action } = require("../model/Action");
 const { Trainer } = require("../model/Trainer");
 const prisma = new PrismaClient();
 
-// GET all pokemons
+// GET all pokemon
 router.get("/", async function (req, res, next) {
   try {
     const limit = req.query.limit ? parseInt(req.query.limit) : 10;
