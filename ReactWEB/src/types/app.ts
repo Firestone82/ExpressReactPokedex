@@ -5,6 +5,7 @@ export type Pokemon = {
   name: string;
   type: string;
   description: string;
+  actions: [];
   trainer: number;
   weight: number;
   height: number;

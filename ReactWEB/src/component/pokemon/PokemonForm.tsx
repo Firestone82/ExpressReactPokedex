@@ -30,6 +30,7 @@ function PokemonForm(props: {
       name: "",
       type: "",
       description: "",
+      actions: [],
       trainer: 0,
       weight: 0,
       height: 0,
@@ -180,7 +181,7 @@ function PokemonForm(props: {
               variant="outlined"
               color="secondary"
               label="Pokémon Trainer"
-              onChange={(e) => setTrainer(parseFloat(e.target.value))}
+              onChange={(e) => setTrainer(parseInt(e.target.value))}
               value={trainer}
               required
             />
