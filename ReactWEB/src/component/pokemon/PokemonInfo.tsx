@@ -44,7 +44,7 @@ export default function PokemonInfo(props: {
 	return (
 		<Dialog open={props.openState} onClose={() => handleClosing()} maxWidth={"md"}>
 			<Stack spacing={1} direction="row">
-				<Box sx={{ padding: 1 }}>
+				<Box sx={{ padding: 2 }}>
 					<Stack spacing={2} direction="row" sx={{ marginBottom: 2 }}>
 						<Stack spacing={2} direction="column" sx={{ marginBottom: 2 }}>
 							<TextField label="Name" value={props.pokemon.name} disabled fullWidth />
