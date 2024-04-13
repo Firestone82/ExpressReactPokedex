@@ -38,11 +38,11 @@ export type Trainer = {
 };
 
 export type Action = {
-    id: number;
-    name: string;
-    type: PokemonType;
-    description: string;
-    damage: number;
-}
+  id: number;
+  name: string;
+  type: PokemonType;
+  description: string;
+  damage: number;
+};
 
 export type Entity = Trainer | Pokemon;

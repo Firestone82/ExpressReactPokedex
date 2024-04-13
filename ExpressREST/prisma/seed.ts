@@ -71,8 +71,7 @@ async function main() {
       id: 8,
       name: "Dragon Claw",
       type: "Dragon",
-      description:
-        "The user slashes the target with huge, sharp claws.",
+      description: "The user slashes the target with huge, sharp claws.",
       damage: 80,
       createdAt: "2024-03-21T00:00:00Z",
     },
@@ -107,8 +106,7 @@ async function main() {
       id: 12,
       name: "Water Gun",
       type: "Water",
-      description:
-        "The target is blasted with a forceful shot of water.",
+      description: "The target is blasted with a forceful shot of water.",
       damage: 40,
       createdAt: "2024-03-21T00:00:00Z",
     },
@@ -165,7 +163,7 @@ async function main() {
         "The user growls in an endearing way, making opposing Pokémon less wary. This lowers their Attack stat.",
       damage: 0,
       createdAt: "2024-03-21T00:00:00Z",
-    }
+    },
   ];
 
   const trainers = [
@@ -215,11 +213,7 @@ async function main() {
       createdAt: "2024-03-21T00:00:00Z",
       trainerId: 1,
       actions: {
-        connect: [
-          { id: 1 },
-          { id: 6 },
-          { id: 7 },
-        ],
+        connect: [{ id: 1 }, { id: 6 }, { id: 7 }],
       },
     },
     {
@@ -233,12 +227,7 @@ async function main() {
       createdAt: "2024-03-21T00:00:00Z",
       trainerId: 4,
       actions: {
-        connect: [
-          { id: 2 },
-          { id: 8 },
-          { id: 9 },
-          { id: 18 },
-        ],
+        connect: [{ id: 2 }, { id: 8 }, { id: 9 }, { id: 18 }],
       },
     },
     {
@@ -252,12 +241,7 @@ async function main() {
       createdAt: "2024-03-21T00:00:00Z",
       trainerId: 3,
       actions: {
-        connect: [
-          { id: 4 },
-          { id: 10 },
-          { id: 11 },
-          { id: 18 },
-        ],
+        connect: [{ id: 4 }, { id: 10 }, { id: 11 }, { id: 18 }],
       },
     },
     {
@@ -271,11 +255,7 @@ async function main() {
       createdAt: "2024-03-21T00:00:00Z",
       trainerId: 2,
       actions: {
-        connect: [
-          { id: 3 },
-          { id: 12 },
-          { id: 13 },
-        ],
+        connect: [{ id: 3 }, { id: 12 }, { id: 13 }],
       },
     },
     {
@@ -289,11 +269,7 @@ async function main() {
       createdAt: "2024-03-21T00:00:00Z",
       trainerId: null,
       actions: {
-        connect: [
-          { id: 5 },
-          { id: 14 },
-          { id: 15 },
-        ],
+        connect: [{ id: 5 }, { id: 14 }, { id: 15 }],
       },
     },
     {
@@ -307,11 +283,7 @@ async function main() {
       createdAt: "2024-03-21T00:00:00Z",
       trainerId: 3,
       actions: {
-        connect: [
-          { id: 4 },
-          { id: 16 },
-          { id: 17 },
-        ],
+        connect: [{ id: 4 }, { id: 16 }, { id: 17 }],
       },
     },
     {
@@ -325,11 +297,7 @@ async function main() {
       createdAt: "2024-03-21T00:00:00Z",
       trainerId: 2,
       actions: {
-        connect: [
-          { id: 3 },
-          { id: 12 },
-          { id: 13 },
-        ],
+        connect: [{ id: 3 }, { id: 12 }, { id: 13 }],
       },
     },
     {
@@ -343,12 +311,7 @@ async function main() {
       createdAt: "2024-03-21T00:00:00Z",
       trainerId: 3,
       actions: {
-        connect: [
-          { id: 4 },
-          { id: 10 },
-          { id: 11 },
-          { id: 18 },
-        ],
+        connect: [{ id: 4 }, { id: 10 }, { id: 11 }, { id: 18 }],
       },
     },
     {
@@ -362,13 +325,9 @@ async function main() {
       createdAt: "2024-03-21T00:00:00Z",
       trainerId: 2,
       actions: {
-        connect: [
-          { id: 3 },
-          { id: 12 },
-          { id: 13 },
-        ],
+        connect: [{ id: 3 }, { id: 12 }, { id: 13 }],
       },
-    }
+    },
   ];
 
   for (const action of actions) {

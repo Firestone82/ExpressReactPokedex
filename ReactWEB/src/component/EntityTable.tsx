@@ -3,10 +3,10 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import TableFooter from "@mui/material/TableFooter";
-import {api, Entity, Pokemon, Trainer} from "../types/app";
+import { api, Entity, Pokemon, Trainer } from "../types/app";
 import axios from "axios";
-import {Stack, TableRow} from "@mui/material";
-import {useSnackbar} from "notistack";
+import { Stack, TableRow } from "@mui/material";
+import { useSnackbar } from "notistack";
 import Button from "@mui/material/Button";
 import SystemUpdateAltIcon from "@mui/icons-material/SystemUpdateAlt";
 import CatchingPokemonIcon from "@mui/icons-material/CatchingPokemon";
@@ -18,21 +18,23 @@ import PokemonInfo from "./pokemon/PokemonInfo";
 import TrainersTableRow from "./trainers/TrainersTableRow";
 import TrainersTableHeader from "./trainers/TrainersTableHeader";
 
-async function requestAPI(entityType: string, page: number, rowsPerPage: number) {
+async function requestAPI(
+  entityType: string,
+  page: number,
+  rowsPerPage: number,
+) {
   if (rowsPerPage == -1) {
     rowsPerPage = 1000; // Quick fix for getting all rows.
   }
 
   return axios
-    .get(
-      `${api}/${entityType}?page=${page}&limit=${rowsPerPage}&lazy=true`,
-    )
+    .get(`${api}/${entityType}?page=${page}&limit=${rowsPerPage}&lazy=true`)
     .then((response) => {
       return response.data;
     });
 }
 
-export default function EntityTable(props:{entityType: string}) {
+export default function EntityTable(props: { entityType: string }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [rows, setRows] = React.useState([] as Entity[]);
@@ -44,14 +46,17 @@ export default function EntityTable(props:{entityType: string}) {
 
   // Fetch data from the server.
   React.useEffect(() => {
-    requestAPI(props.entityType, page * rowsPerPage, rowsPerPage).then(data => {
-      setRows(data.entries as Entity[]);
-      setTotalRows(data.pagination.total);
-    });
+    requestAPI(props.entityType, page * rowsPerPage, rowsPerPage).then(
+      (data) => {
+        setRows(data.entries as Entity[]);
+        setTotalRows(data.pagination.total);
+      },
+    );
   }, []);
 
   // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+  const emptyRows =
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -60,10 +65,12 @@ export default function EntityTable(props:{entityType: string}) {
     console.log("Page changed to:", newPage);
     setPage(newPage);
 
-    requestAPI(props.entityType, newPage * rowsPerPage, rowsPerPage).then(data => {
-      setRows(data.entries as Entity[]);
-      setTotalRows(data.pagination.total);
-    });
+    requestAPI(props.entityType, newPage * rowsPerPage, rowsPerPage).then(
+      (data) => {
+        setRows(data.entries as Entity[]);
+        setTotalRows(data.pagination.total);
+      },
+    );
   };
 
   const handleChangeRowsPerPage = (
@@ -74,7 +81,7 @@ export default function EntityTable(props:{entityType: string}) {
     const newRowsPerPage = parseInt(event.target.value, 10);
     setRowsPerPage(newRowsPerPage);
 
-    requestAPI(props.entityType, page, newRowsPerPage).then(data => {
+    requestAPI(props.entityType, page, newRowsPerPage).then((data) => {
       setRows(data.entries as Entity[]);
       setTotalRows(data.pagination.total);
     });
@@ -87,7 +94,7 @@ export default function EntityTable(props:{entityType: string}) {
       const status = response.status;
 
       if (status === 200) {
-        requestAPI(props.entityType, page, rowsPerPage).then(data => {
+        requestAPI(props.entityType, page, rowsPerPage).then((data) => {
           setRows(data.entries as Entity[]);
           setTotalRows(data.pagination.total);
         });
@@ -128,7 +135,7 @@ export default function EntityTable(props:{entityType: string}) {
           setInfoFormOpen(true);
         });
     }
-  }
+  };
 
   const handleCreateNewButtonClick = () => {
     console.log("Create new button clicked");
@@ -138,9 +145,9 @@ export default function EntityTable(props:{entityType: string}) {
       setEditFormOpen(true);
     } else {
       enqueueSnackbar("This feature is not available for Trainers", {
-          variant: "error",
-          autoHideDuration: 1500,
-          anchorOrigin: { vertical: "top", horizontal: "right" },
+        variant: "error",
+        autoHideDuration: 1500,
+        anchorOrigin: { vertical: "top", horizontal: "right" },
       });
     }
   };
@@ -148,17 +155,18 @@ export default function EntityTable(props:{entityType: string}) {
   const handleExportButtonClick = () => {
     console.log("Export button clicked");
 
-    requestAPI(props.entityType, 0, -1).then(data => {
-        const rows = data.entries as Entity[];
-        const jsonContent = "data:text/json;charset=utf-8," + JSON.stringify(rows, null, 2);
-        const encodedUri = encodeURI(jsonContent);
-        const link = document.createElement("a");
-        link.setAttribute("href", encodedUri);
-        link.setAttribute("download", `${props.entityType}.json`);
-        document.body.appendChild(link);
-        link.click();
+    requestAPI(props.entityType, 0, -1).then((data) => {
+      const rows = data.entries as Entity[];
+      const jsonContent =
+        "data:text/json;charset=utf-8," + JSON.stringify(rows, null, 2);
+      const encodedUri = encodeURI(jsonContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `${props.entityType}.json`);
+      document.body.appendChild(link);
+      link.click();
     });
-  }
+  };
 
   const handleFormSubmitFinish = () => {
     console.log("Form submit finished");
@@ -177,18 +185,18 @@ export default function EntityTable(props:{entityType: string}) {
         sx={{ float: "right", marginBottom: 2, marginTop: 1 }}
       >
         <Button
-            variant="outlined"
-            endIcon={<SystemUpdateAltIcon />}
-            onClick={handleExportButtonClick}
+          variant="outlined"
+          endIcon={<SystemUpdateAltIcon />}
+          onClick={handleExportButtonClick}
         >
           Export
         </Button>
 
         <Button
-            variant="contained"
-            color={"success"}
-            endIcon={<CatchingPokemonIcon />}
-            onClick={handleCreateNewButtonClick}
+          variant="contained"
+          color={"success"}
+          endIcon={<CatchingPokemonIcon />}
+          onClick={handleCreateNewButtonClick}
         >
           Create New
         </Button>
@@ -205,7 +213,7 @@ export default function EntityTable(props:{entityType: string}) {
             {(rowsPerPage > 0
               ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               : rows
-            ).map((row) => (
+            ).map((row) =>
               props.entityType === "pokemon" ? (
                 <PokemonTableRow
                   key={row.id}
@@ -220,11 +228,11 @@ export default function EntityTable(props:{entityType: string}) {
                   row={row as Trainer}
                   onPokemonInfo={handleInfoButtonClick}
                 />
-              )
-            ))}
+              ),
+            )}
             {emptyRows > 0 && (
               <TableRow style={{ height: 73 * emptyRows }}>
-                <td colSpan={8} />
+                <td colSpan={9} />
               </TableRow>
             )}
           </TableBody>

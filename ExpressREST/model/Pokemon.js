@@ -76,7 +76,7 @@ const PokemonType = {
   PSYCHIC: "psychic",
   ROCK: "rock",
   STEEL: "steel",
-  WATER: "water"
+  WATER: "water",
 };
 
 module.exports = {

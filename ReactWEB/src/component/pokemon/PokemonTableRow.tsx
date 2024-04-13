@@ -6,6 +6,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Stack } from "@mui/material";
+import PokemonImage from "./PokemonImage";
 
 export default function PokemonTableRow({
   row,
@@ -22,6 +23,9 @@ export default function PokemonTableRow({
     <TableRow key={row.id}>
       <TableCell component="th" scope="row">
         {row.id}
+      </TableCell>
+      <TableCell>
+        <PokemonImage name={row.name} isSprite={true} />
       </TableCell>
       <TableCell>{row.name}</TableCell>
       <TableCell>{row.type}</TableCell>

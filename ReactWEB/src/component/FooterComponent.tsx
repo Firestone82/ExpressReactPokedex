@@ -1,6 +1,7 @@
 import { Paper, Stack } from "@mui/material";
 import React from "react";
 import Box from "@mui/material/Box";
+import { Link } from "react-router-dom";
 
 export default function FooterComponent() {
   return (
@@ -12,7 +13,20 @@ export default function FooterComponent() {
 
         <Box gridColumn="span 6">
           <p style={{ textAlign: "right" }}>
-            Created by Pavel Mikula and Miroslav Osoba
+            Created by{" "}
+            <Link
+              style={{ color: "#FF9800" }}
+              to={`https://github.com/Firestone82`}
+            >
+              Pavel Mikula
+            </Link>{" "}
+            and{" "}
+            <Link
+              style={{ color: "#FF9800" }}
+              to={`https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2F440drolcwv761.jpg%3Fauto%3Dwebp%26s%3De258232f96b2b40108a5f29a8868c72ad8965b43`}
+            >
+              Miroslav Osoba
+            </Link>
           </p>
         </Box>
       </Box>
