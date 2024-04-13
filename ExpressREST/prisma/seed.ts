@@ -49,6 +49,123 @@ async function main() {
       damage: 80,
       createdAt: "2024-03-21T00:00:00Z",
     },
+    {
+      id: 6,
+      name: "Quick Attack",
+      type: "Normal",
+      description:
+        "The user lunges at the target at a speed that makes it almost invisible. This move always goes first.",
+      damage: 40,
+      createdAt: "2024-03-21T00:00:00Z",
+    },
+    {
+      id: 7,
+      name: "Iron Tail",
+      type: "Steel",
+      description:
+        "The target is slammed with a steel-hard tail. This may also lower the target's Defense stat.",
+      damage: 100,
+      createdAt: "2024-03-21T00:00:00Z",
+    },
+    {
+      id: 8,
+      name: "Dragon Claw",
+      type: "Dragon",
+      description:
+        "The user slashes the target with huge, sharp claws.",
+      damage: 80,
+      createdAt: "2024-03-21T00:00:00Z",
+    },
+    {
+      id: 9,
+      name: "Fire Spin",
+      type: "Fire",
+      description:
+        "The target becomes trapped within a fierce vortex of fire that rages for four to five turns.",
+      damage: 35,
+      createdAt: "2024-03-21T00:00:00Z",
+    },
+    {
+      id: 10,
+      name: "Vine Whip",
+      type: "Grass",
+      description:
+        "The target is struck with slender, whiplike vines to inflict damage.",
+      damage: 45,
+      createdAt: "2024-03-21T00:00:00Z",
+    },
+    {
+      id: 11,
+      name: "Seed Bomb",
+      type: "Grass",
+      description:
+        "The user slams a barrage of hard-shelled seeds down on the target from above.",
+      damage: 80,
+      createdAt: "2024-03-21T00:00:00Z",
+    },
+    {
+      id: 12,
+      name: "Water Gun",
+      type: "Water",
+      description:
+        "The target is blasted with a forceful shot of water.",
+      damage: 40,
+      createdAt: "2024-03-21T00:00:00Z",
+    },
+    {
+      id: 13,
+      name: "Aqua Tail",
+      type: "Water",
+      description:
+        "The user attacks by swinging its tail as if it were a vicious wave in a raging storm.",
+      damage: 90,
+      createdAt: "2024-03-21T00:00:00Z",
+    },
+    {
+      id: 14,
+      name: "Close Combat",
+      type: "Fighting",
+      description:
+        "The user fights the target up close without guarding itself. It also cuts the user's Defense and Sp. Def.",
+      damage: 120,
+      createdAt: "2024-03-21T00:00:00Z",
+    },
+    {
+      id: 15,
+      name: "Extreme Speed",
+      type: "Normal",
+      description:
+        "The user charges the target at blinding speed. This move always goes first.",
+      damage: 80,
+      createdAt: "2024-03-21T00:00:00Z",
+    },
+    {
+      id: 16,
+      name: "Petal Blizzard",
+      type: "Grass",
+      description:
+        "The user stirs up a violent petal blizzard and attacks everything around it.",
+      damage: 90,
+      createdAt: "2024-03-21T00:00:00Z",
+    },
+    {
+      id: 17,
+      name: "Sludge Bomb",
+      type: "Poison",
+      description:
+        "Unsanitary sludge is hurled at the target. It may also poison the target.",
+      damage: 90,
+      createdAt: "2024-03-21T00:00:00Z",
+    },
+    {
+      id: 18,
+      name: "Growl",
+      type: "Normal",
+      description:
+        "The user growls in an endearing way, making opposing Pokémon less wary. This lowers their Attack stat.",
+      damage: 0,
+      createdAt: "2024-03-21T00:00:00Z",
+    }
   ];
 
   const trainers = [
@@ -98,9 +215,11 @@ async function main() {
       createdAt: "2024-03-21T00:00:00Z",
       trainerId: 1,
       actions: {
-        connect: {
-          id: 1,
-        },
+        connect: [
+          { id: 1 },
+          { id: 6 },
+          { id: 7 },
+        ],
       },
     },
     {
@@ -114,9 +233,12 @@ async function main() {
       createdAt: "2024-03-21T00:00:00Z",
       trainerId: 2,
       actions: {
-        connect: {
-          id: 2,
-        },
+        connect: [
+          { id: 2 },
+          { id: 8 },
+          { id: 9 },
+          { id: 18 },
+        ],
       },
     },
     {
@@ -130,9 +252,12 @@ async function main() {
       createdAt: "2024-03-21T00:00:00Z",
       trainerId: 3,
       actions: {
-        connect: {
-          id: 3,
-        },
+        connect: [
+          { id: 4 },
+          { id: 10 },
+          { id: 11 },
+          { id: 18 },
+        ],
       },
     },
     {
@@ -146,9 +271,11 @@ async function main() {
       createdAt: "2024-03-21T00:00:00Z",
       trainerId: 4,
       actions: {
-        connect: {
-          id: 4,
-        },
+        connect: [
+          { id: 3 },
+          { id: 12 },
+          { id: 13 },
+        ],
       },
     },
     {
@@ -162,11 +289,68 @@ async function main() {
       createdAt: "2024-03-21T00:00:00Z",
       trainerId: null,
       actions: {
-        connect: {
-          id: 5,
-        },
+        connect: [
+          { id: 5 },
+          { id: 14 },
+          { id: 15 },
+        ],
       },
     },
+    {
+      id: 6,
+      name: "Venusaur",
+      type: "Grass",
+      description:
+        "There is a large flower on Venusaur's back. The flower is said to take on vivid colors if it gets plenty of nutrition and sunlight. The flower's aroma soothes the emotions of people.",
+      weight: 100.0,
+      height: 2.0,
+      createdAt: "2024-03-21T00:00:00Z",
+      trainerId: 3,
+      actions: {
+        connect: [
+          { id: 3 },
+          { id: 16 },
+          { id: 17 },
+        ],
+      },
+    },
+    {
+      id: 7,
+      name: "Blastoise",
+      type: "Water",
+      description:
+        "Blastoise has water spouts that protrude from its shell. The water spouts are very accurate. They can shoot bullets of water with enough accuracy to strike empty cans from a distance of over 160 feet.",
+      weight: 85.5,
+      height: 1.6,
+      createdAt: "2024-03-21T00:00:00Z",
+      trainerId: 2,
+      actions: {
+        connect: [
+          { id: 3 },
+          { id: 12 },
+          { id: 13 },
+        ],
+      },
+    },
+    {
+      id: 8,
+      name: "Ivysaur",
+      type: "Grass",
+      description:
+        "When the bulb on its back grows large, it appears to lose the ability to stand on its hind legs.",
+      weight: 13.0,
+      height: 1.0,
+      createdAt: "2024-03-21T00:00:00Z",
+      trainerId: 3,
+      actions: {
+        connect: [
+          { id: 4 },
+          { id: 10 },
+          { id: 11 },
+          { id: 18 },
+        ],
+      },
+    }
   ];
 
   for (const action of actions) {
