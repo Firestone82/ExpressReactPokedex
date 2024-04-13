@@ -115,7 +115,7 @@ function PokemonForm(props: {
           autoComplete="off"
           style={{ marginTop: 20 }}
         >
-          <Stack spacing={2} direction="row" sx={{ marginBottom: 4 }}>
+          <Stack spacing={2} direction="row" sx={{ marginBottom: 2 }}>
             <TextField
               type="text"
               variant="outlined"
@@ -153,7 +153,7 @@ function PokemonForm(props: {
             </FormControl>
           </Stack>
 
-          <Stack spacing={2} direction="row" sx={{ marginBottom: 4 }}>
+          <Stack spacing={2} direction="row" sx={{ marginBottom: 2 }}>
             <TextField
               type="text"
               variant="outlined"
@@ -194,7 +194,7 @@ function PokemonForm(props: {
             multiline
             rows={4}
             fullWidth
-            sx={{ marginBottom: 4 }}
+            sx={{ marginBottom: 2 }}
           />
 
           <Stack spacing={2} direction="row" sx={{ float: "right" }}>

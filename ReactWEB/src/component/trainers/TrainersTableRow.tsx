@@ -22,7 +22,7 @@ export default function TrainersTableRow({
       <TableCell align="center" style={{ paddingRight: '8px' }}>
         {row.pokemon.map((pok: any, pokIndex: number) => (
           <React.Fragment key={pok}>
-            <Link onClick={() => onPokemonInfo(pok)}>
+            <Link onClick={() => onPokemonInfo(pok)} sx={{ cursor: "pointer" }}>
               {pok}
             </Link>
             {pokIndex < row.pokemon.length - 1 ? ", " : ""}

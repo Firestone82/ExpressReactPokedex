@@ -74,7 +74,7 @@ export default function PokemonInfo(props: {
 							</Stack>
 						</Stack>
 						<img src={`https://img.pokemondb.net/artwork/${props.pokemon.name.toLowerCase()}.jpg`}
-							 alt={props.pokemon.name} style={{height: "200px", width: "auto"}}/>
+							 alt={props.pokemon.name} style={{ height: "200px", width: "auto", borderRadius: 3 }}/>
 					</Stack>
 					<TextField
 						variant="outlined"
@@ -113,6 +113,15 @@ export default function PokemonInfo(props: {
 							</AccordionDetails>
 						</Accordion>
 					))}
+					{actions.length === 0 && <Accordion disabled>
+						<AccordionSummary
+							aria-controls="no-actions-content"
+							id="no-actions-header"
+							sx={{ minWidth: 300 }}
+						>
+							<Typography>No actions</Typography>
+						</AccordionSummary>
+					</Accordion>}
 				</Box>
 			</Stack>
 
