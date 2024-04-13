@@ -3,6 +3,7 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import { Link } from "@mui/material";
 import { api } from "../../types/app";
+import PokemonImage from "../pokemon/PokemonImage";
 
 export default function TrainersTableRow({
   row,
@@ -49,7 +50,7 @@ export default function TrainersTableRow({
         {row.pokemon.map((pok: any, pokIndex: number) => (
           <Link key={pok} onClick={() => onPokemonInfo(pok)} sx={{ cursor: "pointer" }}>
             {sprites[pokIndex] && (
-              <img src={sprites[pokIndex]} alt={`Sprite for ${pok}`} style={{ width: '48px', height: '48px' }} />
+              <PokemonImage name={pokemonNames[pokIndex]} isSprite={true} />
             )}
           </Link>
         ))}

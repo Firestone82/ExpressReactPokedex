@@ -224,7 +224,7 @@ export default function EntityTable(props:{entityType: string}) {
             ))}
             {emptyRows > 0 && (
               <TableRow style={{ height: 73 * emptyRows }}>
-                <td colSpan={8} />
+                <td colSpan={9} />
               </TableRow>
             )}
           </TableBody>

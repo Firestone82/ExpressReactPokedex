@@ -12,7 +12,7 @@ export default function FooterComponent() {
 
         <Box gridColumn="span 6">
           <p style={{ textAlign: "right" }}>
-            Created by Pavel Mikula and Miroslav Osoba
+            Created by <span style={{color: "#FF9800"}}>Pavel Mikula</span> and <span style={{color: "#FF9800"}}>Miroslav Osoba</span>
           </p>
         </Box>
       </Box>

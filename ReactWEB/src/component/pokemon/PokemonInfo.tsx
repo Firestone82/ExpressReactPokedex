@@ -7,6 +7,7 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import PokemonImage from "./PokemonImage";
 
 export default function PokemonInfo(props: {
 	openState: boolean;
@@ -19,7 +20,6 @@ export default function PokemonInfo(props: {
 
 	const [trainer, setTrainer] = useState("Not caught");
 	const [actions, setActions] = useState([] as Action[]);
-	const [imageUrl, setImageUrl] = useState("");
 
 	if (props.pokemon.trainer) {
 		fetch(`${api}/trainers/${props.pokemon.trainer}`)
@@ -39,21 +39,7 @@ export default function PokemonInfo(props: {
 		Promise.all(promises).then((data) => {
 			setActions(data);
 		});
-
-		// Fetch the image
-		fetch(`https://pokeapi.co/api/v2/pokemon/${props.pokemon.name.toLowerCase()}`)
-			.then((response) => response.json())
-			.then((data) => {
-				const img = data.sprites.other["official-artwork"].front_default;
-				const shiny = data.sprites.other["official-artwork"].front_shiny;
-				const rnd = Math.floor(Math.random() * 20);
-				if (rnd == 1 && shiny) {
-					setImageUrl(shiny);
-				} else {
-					setImageUrl(img);
-				}
-			});
-	}, []);
+	});
 
 	return (
 		<Dialog open={props.openState} onClose={() => handleClosing()} maxWidth={"md"}>
@@ -68,11 +54,7 @@ export default function PokemonInfo(props: {
 								<TextField label="Weight" value={props.pokemon.weight} disabled fullWidth />
 							</Stack>
 						</Stack>
-						<img
-							src={imageUrl}
-							alt={props.pokemon.name}
-							style={{ height: "200px", width: "auto", borderRadius: 3 }}
-						/>
+						<PokemonImage name={props.pokemon.name} isSprite={false} />
 					</Stack>
 					<TextField
 						variant="outlined"

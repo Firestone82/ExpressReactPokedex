@@ -8,6 +8,7 @@ export default function PokemonTableHeader() {
     <TableHead className={"tableHeader"}>
       <TableRow>
         <TableCell>ID</TableCell>
+        <TableCell>Image</TableCell>
         <TableCell>Name</TableCell>
         <TableCell>Type</TableCell>
         <TableCell>Description</TableCell>
