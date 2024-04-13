@@ -5,7 +5,7 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 
 const indexRouter = require("./routes/index");
-const pokemonRouter = require("./routes/pokemons");
+const pokemonRouter = require("./routes/pokemon");
 const trainerRouter = require("./routes/trainers");
 const actionRouter = require("./routes/actions");
 
