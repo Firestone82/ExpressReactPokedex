@@ -124,8 +124,16 @@ export default function EntityTable(props:{entityType: string}) {
   const handleCreateNewButtonClick = () => {
     console.log("Create new button clicked");
 
-    setEntity({} as Entity);
-    setEditFormOpen(true);
+    if (props.entityType === "pokemon") {
+      setEntity({} as Entity);
+      setEditFormOpen(true);
+    } else {
+      enqueueSnackbar("This feature is not available for Trainers", {
+          variant: "error",
+          autoHideDuration: 1500,
+          anchorOrigin: { vertical: "top", horizontal: "right" },
+      });
+    }
   };
 
   const handleExportButtonClick = () => {
@@ -166,14 +174,14 @@ export default function EntityTable(props:{entityType: string}) {
         >
           Export
         </Button>
+
         <Button
-          variant="contained"
-          color={"success"}
-          endIcon={<CatchingPokemonIcon />}
-          onClick={handleCreateNewButtonClick}
+            variant="contained"
+            color={"success"}
+            endIcon={<CatchingPokemonIcon />}
+            onClick={handleCreateNewButtonClick}
         >
-          {" "}
-          Create New{" "}
+          Create New
         </Button>
       </Stack>
 
