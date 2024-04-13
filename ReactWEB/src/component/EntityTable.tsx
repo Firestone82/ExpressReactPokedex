@@ -117,8 +117,17 @@ export default function EntityTable(props:{entityType: string}) {
   const handleInfoButtonClick = (id: number) => {
     console.log("Info button clicked for id:", id);
 
-    setEntity(rows.filter((row) => row.id === id)[0]);
-    setInfoFormOpen(true);
+    if (props.entityType === "pokemon") {
+      setEntity(rows.filter((row) => row.id === id)[0]);
+      setInfoFormOpen(true);
+    } else {
+      fetch(`${api}/pokemon/${id}?lazy=true`)
+        .then((response) => response.json())
+        .then((data) => {
+          setEntity(data as Pokemon);
+          setInfoFormOpen(true);
+        });
+    }
   }
 
   const handleCreateNewButtonClick = () => {
@@ -209,6 +218,7 @@ export default function EntityTable(props:{entityType: string}) {
                 <TrainersTableRow
                   key={row.id}
                   row={row as Trainer}
+                  onPokemonInfo={handleInfoButtonClick}
                 />
               )
             ))}
