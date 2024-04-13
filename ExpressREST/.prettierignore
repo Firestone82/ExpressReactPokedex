@@ -1,3 +1,4 @@
 # Ignore artifacts:
 .idea
 node_modules
+prisma/migrations
