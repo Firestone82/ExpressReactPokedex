@@ -231,7 +231,7 @@ async function main() {
       weight: 90.5,
       height: 1.7,
       createdAt: "2024-03-21T00:00:00Z",
-      trainerId: 2,
+      trainerId: 5,
       actions: {
         connect: [
           { id: 2 },
@@ -269,7 +269,7 @@ async function main() {
       weight: 9.0,
       height: 0.5,
       createdAt: "2024-03-21T00:00:00Z",
-      trainerId: 4,
+      trainerId: 2,
       actions: {
         connect: [
           { id: 3 },
@@ -348,6 +348,24 @@ async function main() {
           { id: 10 },
           { id: 11 },
           { id: 18 },
+        ],
+      },
+    },
+    {
+      id: 9,
+      name: "Vaporeon",
+      type: "Water",
+      description:
+        "Vaporeon underwent a spontaneous mutation and grew fins and gills that allow it to live underwater. This Pokémon has the ability to freely control water.",
+      weight: 29.0,
+      height: 1.0,
+      createdAt: "2024-03-21T00:00:00Z",
+      trainerId: 2,
+      actions: {
+        connect: [
+          { id: 3 },
+          { id: 12 },
+          { id: 13 },
         ],
       },
     }
