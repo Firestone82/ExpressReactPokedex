@@ -220,6 +220,16 @@ router.put("/:id", async function (req, res, next) {
 
     // Get Trainer
     let trainer = null;
+
+    // Convert trainer to trainerId
+    if (pokemonData.trainer && !pokemonData.trainerId) {
+      if (typeof pokemonData.trainer !== "object") {
+        pokemonData.trainerId = pokemonData.trainer;
+      } else {
+        pokemonData.trainerId = pokemonData.trainer.id;
+      }
+    }
+
     if (pokemonData.trainerId) {
       trainer = await prisma.trainer.findUnique({
         where: {
