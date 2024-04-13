@@ -191,7 +191,7 @@ export default function EntityTable(props:{entityType: string}) {
             ).map((row) => (
               props.entityType === "pokemon" ? (
                 <PokemonTableRow
-                  key={row.name}
+                  key={row.id}
                   row={row as Pokemon}
                   onInfo={handleInfoButtonClick}
                   onEdit={handleEditButtonClick}
@@ -199,7 +199,7 @@ export default function EntityTable(props:{entityType: string}) {
                 />
               ) : (
                 <TrainersTableRow
-                  key={row.name}
+                  key={row.id}
                   row={row as Trainer}
                 />
               )
