@@ -47,7 +47,7 @@ export default function TrainersTableRow({
       <TableCell>{row.email}</TableCell>
       <TableCell align="center" style={{ paddingRight: '8px' }}>
         {row.pokemon.map((pok: any, pokIndex: number) => (
-          <Link onClick={() => onPokemonInfo(pok)} sx={{ cursor: "pointer" }}>
+          <Link key={pok} onClick={() => onPokemonInfo(pok)} sx={{ cursor: "pointer" }}>
             {sprites[pokIndex] && (
               <img src={sprites[pokIndex]} alt={`Sprite for ${pok}`} />
             )}
