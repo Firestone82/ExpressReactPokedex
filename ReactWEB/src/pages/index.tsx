@@ -1,16 +1,14 @@
 import React from 'react';
-import NavbarComponent from "../component/NavbarComponent";
-import Container from "react-bootstrap/Container";
+import {Paper, Stack} from "@mui/material";
 
 const Index = () => {
 	return (
-		<>
-			<NavbarComponent/>
-			<Container className="page">
-				<h1>Home</h1>
-				<p>Welcome to the home page</p>
-			</Container>
-		</>
+		<Stack spacing={2}>
+			<Paper elevation={3} sx={{ px: 2, py: 1 }}>
+			<h1>Home</h1>
+			<p>Welcome to the home page</p>
+			</Paper>
+		</Stack>
 	);
 };
 

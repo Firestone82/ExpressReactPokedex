@@ -1,236 +1,258 @@
-import React from "react";
-import { DataGrid, GridActionsCellItem, GridColDef, GridEventListener, GridRowEditStopReasons, GridRowId, GridRowModel, GridRowModes, GridRowModesModel, GridRowsProp, GridSlots, GridToolbarContainer } from "@mui/x-data-grid";
-import { Box, Button, ButtonGroup, Dialog, FormControl, FormHelperText, Input, InputLabel, OutlinedInput, TextField } from "@mui/material";
+import * as React from 'react';
+import {useTheme} from '@mui/material/styles';
+import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
+import TableFooter from '@mui/material/TableFooter';
+import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import AddIcon from "@mui/icons-material/Add";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import SaveIcon from "@mui/icons-material/Save";
-import CancelIcon from "@mui/icons-material/Cancel";
+import IconButton from '@mui/material/IconButton';
+import FirstPageIcon from '@mui/icons-material/FirstPage';
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import LastPageIcon from '@mui/icons-material/LastPage';
+import {Pokemon} from "../../types/app";
+import axios from "axios";
+import {Stack, TableHead} from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import {useSnackbar} from 'notistack';
+import PokemonForm from "./PokemonForm";
+import Button from "@mui/material/Button";
+import SystemUpdateAltIcon from "@mui/icons-material/SystemUpdateAlt";
+import CatchingPokemonIcon from "@mui/icons-material/CatchingPokemon";
 
-import { Pokemon } from "../../types/app";
-
-function handleEditClick(id: GridRowId) {
-  
+interface TablePaginationActionsProps {
+    count: number;
+    page: number;
+    rowsPerPage: number;
+    onPageChange: (
+        event: React.MouseEvent<HTMLButtonElement>,
+        newPage: number,
+    ) => void;
 }
 
-function handleDeleteClick(id: GridRowId) {
-  
-}
+function TablePaginationActions(props: TablePaginationActionsProps) {
+    const theme = useTheme();
+    const { count, page, rowsPerPage, onPageChange } = props;
 
-function BasicTable(props: { rows: Pokemon[] }) {
-  console.log(props.rows);
-  return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell align="center">ID</TableCell>
-            <TableCell align="left">Name</TableCell>
-            <TableCell align="left">Type</TableCell>
-            <TableCell align="left">Description</TableCell>
-            <TableCell align="center">Height</TableCell>
-            <TableCell align="center">Weight</TableCell>
-            <TableCell align="center">ActionsID</TableCell>
-            <TableCell align="center">TrainerID</TableCell>
-            <TableCell align="center">Options</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {props.rows.map((row) => (
-            <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+    const handleFirstPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        onPageChange(event, 0);
+    };
+
+    const handleBackButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        onPageChange(event, page - 1);
+    };
+
+    const handleNextButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        onPageChange(event, page + 1);
+    };
+
+    const handleLastPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
+    };
+
+    return (
+        <Box sx={{ flexShrink: 0, ml: 2.5 }}>
+            <IconButton
+                onClick={handleFirstPageButtonClick}
+                disabled={page === 0}
+                aria-label="first page"
             >
-              <TableCell align="center">{row.id}</TableCell>
-              <TableCell align="left">{row.name}</TableCell>
-              <TableCell align="left">{row.type}</TableCell>
-              <TableCell align="left">{row.description}</TableCell>
-              <TableCell align="center">{row.height}</TableCell>
-              <TableCell align="center">{row.weight}</TableCell>
-              <TableCell align="center">{row.actions}</TableCell>
-              <TableCell align="center">{row.trainer}</TableCell>
-              <TableCell align="center">
-                <ButtonGroup>
-                  <Button startIcon={<EditIcon />} onClick={() => handleEditClick(row.id)}></Button>
-                  <Button startIcon={<DeleteIcon />} onClick={() => handleDeleteClick(row.id)}></Button>
-                </ButtonGroup>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
+                {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
+            </IconButton>
+            <IconButton
+                onClick={handleBackButtonClick}
+                disabled={page === 0}
+                aria-label="previous page"
+            >
+                {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+            </IconButton>
+            <IconButton
+                onClick={handleNextButtonClick}
+                disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+                aria-label="next page"
+            >
+                {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+            </IconButton>
+            <IconButton
+                onClick={handleLastPageButtonClick}
+                disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+                aria-label="last page"
+            >
+                {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
+            </IconButton>
+        </Box>
+    );
+}
+
+async function requestAPI(page: number, rowsPerPage: number) {
+    return axios.get(`http://localhost:3000/pokemons?page=${page}&limit=${rowsPerPage}&lazy=true`)
+        .then(response => {
+            return response.data;
+        });
 }
 
 export default function PokemonTable() {
-  let columns: GridColDef[] = [
-    {
-      field: "id",
-      headerName: "ID",
-      width: 50,
-    },
-    {
-      field: "name",
-      headerName: "Name",
-      width: 150,
-      editable: true,
-    },
-    {
-      field: "type",
-      headerName: "Type",
-      width: 150,
-      editable: true,
-      type: "singleSelect",
-      valueOptions: ["Bug", "Dark", "Dragon", "Electric", "Fairy", "Fighting", "Fire", "Flying", "Ghost", "Grass", "Ground", "Ice", "Normal", "Poison", "Psychic", "Rock", "Steel", "Water"],
-    },
-    {
-      field: "description",
-      headerName: "Description",
-      flex: 1,
-      editable: true,
-    },
-    {
-      field: "height",
-      headerName: "Height",
-      width: 75,
-      editable: true,
-    },
-    {
-      field: "weight",
-      headerName: "Weight",
-      width: 75,
-      editable: true,
-    },
-    {
-      field: "actions",
-      headerName: "ActionsID",
-      width: 75,
-      editable: true,
-    },
-    {
-      field: "trainer",
-      headerName: "TrainerID",
-      width: 75,
-      editable: true,
-    },
-    {
-      field: 'options',
-      type: 'actions',
-      headerName: 'Options',
-      width: 100,
-      cellClassName: 'actions',
-      getActions: ({ id }) => {
-        return [
-          <GridActionsCellItem
-            icon={<EditIcon />}
-            label="Edit"
-            className="textPrimary"
-            onClick={handleEditClick(id)}
-            color="inherit"
-          />,
-          <GridActionsCellItem
-            icon={<DeleteIcon />}
-            label="Delete"
-            onClick={handleDeleteClick(id)}
-            color="inherit"
-          />,
-        ];
-      },
-    },
-  ];
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rows, setRows] = React.useState([] as Pokemon[]);
+    const [editFormOpen, setEditFormOpen] = React.useState(false);
+    const [pokemon, setPokemon] = React.useState({} as Pokemon);
+    const { enqueueSnackbar } = useSnackbar();
 
-  let initData: GridRowsProp = [];
-  const [rows, setRows] = React.useState(initData);
-  const [open, setOpen] = React.useState(false);
+    // Fetch data from the server. TODO: Paginate the data.
+    React.useEffect(() => {
+        requestAPI(page, rowsPerPage).then(data => {
+            setRows(data.entries);
+        });
+    }, []);
 
-  const handleDeleteClick = (id: GridRowId) => () => {
-    setRows(rows.filter((row) => row.id !== id));
-    fetch(`http://localhost:3000/pokemons/${id}`, { method: "DELETE" })
-      .then((response) => response.json())
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
+    // Avoid a layout jump when reaching the last page with empty rows.
+    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
-  const handleEditClick = (id: GridRowId) => () => {
-    setOpen(true);
-  }
+    const handleChangePage = (
+        event: React.MouseEvent<HTMLButtonElement> | null,
+        newPage: number,
+    ) => {
+        setPage(newPage);
+        requestAPI(page, rowsPerPage).then(data => {
+            setRows(data.entries);
+        });
+    };
 
-  React.useEffect(() => {
-    fetch("http://localhost:3000/pokemons?lazy=true")
-      .then((response) => response.json())
-      .then((data) => {
-        setRows(data.entries);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }, []);
+    const handleChangeRowsPerPage = (
+        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+        requestAPI(page, rowsPerPage).then(data => {
+            setRows(data.entries);
+        });
+    };
 
-  /*
-  const handleSaveClick = (id: GridRowId) => () => {
-    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
-    let data = tmpRows.find((row) => row.id === id);
-    console.log(data);
-    fetch(`http://localhost:3000/pokemons/${id}`, {method: "PUT", body: JSON.stringify(data)})
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
-  */
+    const handleDeleteButtonClick = (id: number) => {
+        axios.delete(`http://localhost:3000/pokemons/${id}`)
+            .then(response => {
+                const status = response.status;
 
-  return (
-    <>
-      <Box sx={{
-          height: 500,
-          width: '100%',
-          '& .actions': {
-            color: 'text.secondary',
-          },
-          '& .textPrimary': {
-            color: 'text.primary',
-          },
-        }}
-      >
-        <BasicTable rows={rows.map(row => row as Pokemon)} />
-      </Box>
-      <Dialog open={open} onClose={() => setOpen(false)}>
-        <Box>
-          <h1>Edit Pokemon</h1>
-          <form>
-            <FormControl>
-              <InputLabel htmlFor="component-outlined">Name</InputLabel>
-              <OutlinedInput
-                id="component-outlined"
-                defaultValue="Composed TextField"
-                label="Name"
-              />
-            </FormControl>
-            <TextField
-              id="filled-multiline-static"
-              label="Multiline"
-              multiline
-              rows={4}
-              defaultValue="Default Value"
-              variant="filled"
-            />
-            <Button variant="contained" color="primary" startIcon={<SaveIcon />} type="submit">Save</Button>
-            <Button variant="contained" color="secondary" startIcon={<CancelIcon />} type="button" onClick={() => setOpen(false)}>Cancel</Button>
-          </form>
-        </Box>
-      </Dialog>
-    </>
-  );
+                if (status === 200) {
+                    setRows(rows.filter(row => row.id !== id));
+                    enqueueSnackbar('Pokemon deleted successfully!',
+                        { variant: 'error', autoHideDuration: 1500, anchorOrigin: { vertical: 'top', horizontal: 'right' } }
+                    );
+                } else {
+                    enqueueSnackbar('Failed to delete Pokemon!',
+                        { variant: 'error', autoHideDuration: 1500, anchorOrigin: { vertical: 'top', horizontal: 'right' } }
+                    );
+                }
+            });
+    }
+
+    const handleEditButtonClick = (id: number) => {
+        console.log('Edit button clicked for id:', id);
+        setPokemon(rows.filter(row => row.id === id)[0]);
+        setEditFormOpen(true);
+    }
+
+    const handleCreateNewButtonClick = () => {
+        console.log('Create new button clicked');
+        setPokemon({} as Pokemon);
+        setEditFormOpen(true);
+    }
+
+    const handleFormSubmitFinish = () => {
+        requestAPI(page, rowsPerPage).then(data => {
+            setRows(data.entries);
+        });
+    }
+
+    return (
+        <>
+            <Stack direction="row" spacing={2} sx={{ float: 'right', marginBottom: 2, marginTop: 1 }}>
+                <Button variant="outlined" endIcon={<SystemUpdateAltIcon />}>
+                    Export
+                </Button>
+
+                <Button variant="contained" color={"success"} endIcon={<CatchingPokemonIcon /> } onClick={handleCreateNewButtonClick}>
+                    Create New
+                </Button>
+            </Stack>
+
+            <TableContainer>
+                <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
+                    <TableHead className={'tableHeader'}>
+                        <TableRow>
+                            <TableCell>ID</TableCell>
+                            <TableCell>Name</TableCell>
+                            <TableCell>Type</TableCell>
+                            <TableCell>Description</TableCell>
+                            <TableCell align="center">Height</TableCell>
+                            <TableCell align="center">Weight</TableCell>
+                            <TableCell align="center">Trainer</TableCell>
+                            <TableCell align="center">Actions</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {(rowsPerPage > 0
+                                ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                : rows
+                        ).map((row) => (
+                            <TableRow key={row.name}>
+                                <TableCell component="th" scope="row">{row.id}</TableCell>
+                                <TableCell>{row.name}</TableCell>
+                                <TableCell>{row.type}</TableCell>
+                                <TableCell>{row.description}</TableCell>
+                                <TableCell align="center">{row.height}</TableCell>
+                                <TableCell align="center">{row.weight}</TableCell>
+                                <TableCell align="center">{row.trainer}</TableCell>
+                                <TableCell align="center">
+                                    <Stack direction="row" spacing={1}>
+                                        <IconButton aria-label="edit" sx={{ color: 'primary.main' }} onClick={() => handleEditButtonClick(row.id)}>
+                                            <EditIcon />
+                                        </IconButton>
+
+                                        <IconButton aria-label="delete" sx={{ color: 'error.main' }} onClick={() => handleDeleteButtonClick(row.id)}>
+                                            <DeleteIcon />
+                                        </IconButton>
+                                    </Stack>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+
+                        {emptyRows > 0 && (
+                            <TableRow style={{ height: 53 * emptyRows }}>
+                                <TableCell colSpan={8} />
+                            </TableRow>
+                        )}
+                    </TableBody>
+                    <TableFooter>
+                        <TableRow>
+                            <TablePagination
+                                rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                                colSpan={8}
+                                count={rows.length}
+                                rowsPerPage={rowsPerPage}
+                                page={page}
+                                slotProps={{
+                                    select: {
+                                        inputProps: {
+                                            'aria-label': 'rows per page',
+                                        },
+                                        native: true,
+                                    },
+                                }}
+                                onPageChange={handleChangePage}
+                                onRowsPerPageChange={handleChangeRowsPerPage}
+                                ActionsComponent={TablePaginationActions}
+                            />
+                        </TableRow>
+                    </TableFooter>
+                </Table>
+            </TableContainer>
+            { editFormOpen && <PokemonForm openState={editFormOpen} setStateFunc={setEditFormOpen} pokemon={pokemon} tableReloadFunc={handleFormSubmitFinish}/> }
+        </>
+    );
 }

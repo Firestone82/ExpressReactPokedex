@@ -1,16 +1,14 @@
 import React from 'react';
-import NavbarComponent from "../component/NavbarComponent";
-import Container from "react-bootstrap/Container";
+import {Paper, Stack} from "@mui/material";
 
 const Trainers = () => {
 	return (
-		<>
-			<NavbarComponent/>
-			<Container className="page">
+		<Stack spacing={2}>
+			<Paper elevation={3} sx={{ px: 2, py: 1 }}>
 				<h1>Trainers!</h1>
 				<p>Aaaaaaaaaaaa</p>
-			</Container>
-		</>
+			</Paper>
+		</Stack>
 	);
 };
 

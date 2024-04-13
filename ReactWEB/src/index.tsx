@@ -1,27 +1,43 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
+import {createBrowserRouter, RouterProvider,} from "react-router-dom";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/css/app.css';
-
-import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Pokemons from "./pages/pokemons"
 import Trainers from "./pages/trainers"
 import Index from "./pages/index";
+import App from "./App";
+
+const router = createBrowserRouter([
+	{
+		path: "/",
+		element: <App />,
+		children: [
+			{
+				index: true,
+				element: <Index />
+			},
+			{
+				path: "pokemons",
+				element: <Pokemons />
+			},
+			{
+				path: "trainers",
+				element: <Trainers />
+			}
+		],
+	},
+]);
 
 const root = ReactDOM.createRoot(
 	document.getElementById('root') as HTMLElement
 );
 
 root.render(
-	<BrowserRouter>
-		<Routes>
-			<Route path="/pokemons" element={<Pokemons/>} />
-			<Route path="/trainers" element={<Trainers/>} />
-			<Route path="/" element={<Index/>} />
-		</Routes>
-	</BrowserRouter>
+	<React.StrictMode>
+		<RouterProvider router={router} />
+	</React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

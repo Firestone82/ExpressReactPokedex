@@ -1,18 +1,19 @@
 import React from 'react';
-import NavbarComponent from "../component/NavbarComponent";
-import Container from "react-bootstrap/Container";
 import PokemonTable from '../component/pokemons/PokemonTable';
+import {Paper, Stack} from "@mui/material";
 
 const Pokemons = () => {
 	return (
-		<>
-			<NavbarComponent/>
-			<Container className="page">
-				<h1>Pokemons!</h1>
-				<p>Aaaaaaaaaaaa</p>
+		<Stack spacing={2}>
+			<Paper elevation={3} sx={{ px: 2, py: 1 }}>
+				<h1>Pokemons</h1>
+				<p>Here you can find all the pokemons</p>
+			</Paper>
+
+			<Paper elevation={3} sx={{ padding: 1 }}>
 				<PokemonTable/>
-			</Container>
-		</>
+			</Paper>
+		</Stack>
 	);
 };
 
