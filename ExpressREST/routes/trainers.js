@@ -13,7 +13,7 @@ router.get("/", async function (req, res, next) {
     const offset = req.query.offset ? parseInt(req.query.offset) : 0;
     const lazy = req.query.lazy === "true";
 
-    const total = prisma.trainer.count();
+    const total = await prisma.trainer.count();
     let entries = [];
 
     if (lazy) {
