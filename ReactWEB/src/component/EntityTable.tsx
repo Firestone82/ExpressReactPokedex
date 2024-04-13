@@ -120,6 +120,21 @@ export default function EntityTable(props:{entityType: string}) {
     setEditFormOpen(true);
   };
 
+  const handleExportButtonClick = () => {
+    console.log("Export button clicked");
+
+    requestAPI(props.entityType, 0, -1).then(data => {
+        const rows = data.entries as Entity[];
+        const jsonContent = "data:text/json;charset=utf-8," + JSON.stringify(rows, null, 2);
+        const encodedUri = encodeURI(jsonContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `${props.entityType}.json`);
+        document.body.appendChild(link);
+        link.click();
+    });
+  }
+
   const handleFormSubmitFinish = () => {
     requestAPI(props.entityType, page, rowsPerPage).then((data) => {
       setTotalRows(data.pagination.total);
@@ -134,9 +149,12 @@ export default function EntityTable(props:{entityType: string}) {
         spacing={2}
         sx={{ float: "right", marginBottom: 2, marginTop: 1 }}
       >
-        <Button variant="outlined" endIcon={<SystemUpdateAltIcon />}>
-          {" "}
-          Export{" "}
+        <Button
+            variant="outlined"
+            endIcon={<SystemUpdateAltIcon />}
+            onClick={handleExportButtonClick}
+        >
+          Export
         </Button>
         <Button
           variant="contained"
