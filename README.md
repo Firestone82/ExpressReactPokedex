@@ -46,6 +46,11 @@ Selected theme of this project, were pokemons. Using REST we are able to do basi
         - README, Prettier, Able to run the whole project easily! 
 
 ## Instalation
+Using docker-compose
+```bash
+docker-compose up
+```
+
 Express JS (REST API)
 ```bash
 npm install
@@ -64,7 +69,7 @@ npm run start
 ```
 
 ## API Usage / Examples
-**GET -** http://localhost:3000/pokemons?lazy=true - *Returns paginated lazy entries*
+**GET -** http://localhost:3000/pokemon?lazy=true - *Returns paginated lazy entries*
 ```json
 {
     "entries": [
@@ -89,7 +94,7 @@ npm run start
     }
 }
 ```
-**GET -** http://localhost:3000/pokemons/1 - *Returns single entry*
+**GET -** http://localhost:3000/pokemon/1 - *Returns single entry*
 ```json
 {
     "id": 1,
@@ -120,7 +125,7 @@ npm run start
     }
 }
 ```
-**POST -**  http://localhost:3000/pokemons - *Creates mew pokemon*
+**POST -**  http://localhost:3000/pokemon - *Creates mew pokemon*
 ```json
 {
     "name": "Eevee",
@@ -131,6 +136,38 @@ npm run start
     "image": "https://example.com/images/eevee.jpg",
     "actions": [2],
     "trainer": 1
+}
+```
+**GET -** http://localhost:3000/actions - *Returns all actions*
+```json
+{
+    "entries": [
+        {
+            "id": 1,
+            "name": "Thunderbolt",
+            "type": "Electric",
+            "description": "A strong electric attack that may also leave the target with paralysis.",
+            "damage": 90,
+            "createdAt": "2024-03-21T00:00:00.000Z"
+        },
+        ...
+    ]
+}
+```
+**GET -** http://localhost:3000/trainers - *Returns all trainers*
+```json
+{
+    "entries": [
+        {
+            "id": 1,
+            "name": "Ash Ketchum",
+            "email": "ash.ketchup@gmail.com",
+            "password": "securePassword123",
+            "createdAt": "2024-03-21T00:00:00.000Z",
+            "deletedAt": null
+        },
+        ...
+    ]
 }
 ```
 **POST -** http://localhost:3000/trainers/1/catch/1 - *Catches new pokemon* <br>
