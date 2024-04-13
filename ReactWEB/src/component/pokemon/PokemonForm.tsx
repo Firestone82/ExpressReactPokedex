@@ -112,7 +112,6 @@ function PokemonForm(props: {
 
         <form
           onSubmit={handleSubmit}
-          noValidate
           autoComplete="off"
           style={{ marginTop: 20 }}
         >
@@ -127,8 +126,7 @@ function PokemonForm(props: {
               fullWidth
               required
             />
-
-            <FormControl variant="outlined" sx={{ m: 1, minWidth: 120 }}>
+            <FormControl variant="outlined" sx={{ m: 1, minWidth: 200 }}>
               <InputLabel id="demo-simple-select-standard-label">
                 Pokémon Type
               </InputLabel>
@@ -181,9 +179,8 @@ function PokemonForm(props: {
               variant="outlined"
               color="secondary"
               label="Pokémon Trainer"
-              onChange={(e) => setTrainer(parseInt(e.target.value))}
+              onChange={(e) => setTrainer(parseInt(e.target.value) || "")}
               value={trainer}
-              required
             />
           </Stack>
 

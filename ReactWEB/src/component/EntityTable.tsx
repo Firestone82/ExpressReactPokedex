@@ -3,10 +3,10 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import TableFooter from "@mui/material/TableFooter";
-import { Pokemon, Trainer, Entity, api } from "../types/app";
+import {api, Entity, Pokemon, Trainer} from "../types/app";
 import axios from "axios";
-import { Stack, TableRow } from "@mui/material";
-import { useSnackbar } from "notistack";
+import {Stack, TableRow} from "@mui/material";
+import {useSnackbar} from "notistack";
 import Button from "@mui/material/Button";
 import SystemUpdateAltIcon from "@mui/icons-material/SystemUpdateAlt";
 import CatchingPokemonIcon from "@mui/icons-material/CatchingPokemon";
@@ -57,6 +57,7 @@ export default function EntityTable(props:{entityType: string}) {
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number,
   ) => {
+    console.log("Page changed to:", newPage);
     setPage(newPage);
 
     requestAPI(props.entityType, newPage * rowsPerPage, rowsPerPage).then(data => {
@@ -68,6 +69,8 @@ export default function EntityTable(props:{entityType: string}) {
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
+    console.log("Rows per page changed to:", event.target.value);
+
     const newRowsPerPage = parseInt(event.target.value, 10);
     setRowsPerPage(newRowsPerPage);
 
@@ -78,6 +81,8 @@ export default function EntityTable(props:{entityType: string}) {
   };
 
   const handleDeleteButtonClick = (id: number) => {
+    console.log("Delete button clicked for id:", id);
+
     axios.delete(`${api}/${props.entityType}/${id}`).then((response) => {
       const status = response.status;
 
@@ -104,18 +109,21 @@ export default function EntityTable(props:{entityType: string}) {
 
   const handleEditButtonClick = (id: number) => {
     console.log("Edit button clicked for id:", id);
+
     setEntity(rows.filter((row) => row.id === id)[0]);
     setEditFormOpen(true);
   };
 
   const handleInfoButtonClick = (id: number) => {
     console.log("Info button clicked for id:", id);
+
     setEntity(rows.filter((row) => row.id === id)[0]);
     setInfoFormOpen(true);
   }
 
   const handleCreateNewButtonClick = () => {
     console.log("Create new button clicked");
+
     setEntity({} as Entity);
     setEditFormOpen(true);
   };
@@ -136,6 +144,8 @@ export default function EntityTable(props:{entityType: string}) {
   }
 
   const handleFormSubmitFinish = () => {
+    console.log("Form submit finished");
+
     requestAPI(props.entityType, page, rowsPerPage).then((data) => {
       setTotalRows(data.pagination.total);
       setRows(data.entries as Entity[]);
