@@ -1,9 +1,16 @@
-import react, { useEffect, useState } from 'react';
+import react, { useEffect, useState } from "react";
 
-export default function PokemonImage({ name, isSprite }: { name: string, isSprite: boolean}) {
+export default function PokemonImage({
+  name,
+  isSprite,
+}: {
+  name: string;
+  isSprite: boolean;
+}) {
+  const [imageUrl, setImageUrl] = useState(
+    "https://fakeimg.pl/200x200?text=Loading",
+  );
 
-  const [imageUrl, setImageUrl] = useState("https://fakeimg.pl/200x200?text=Loading");
-  
   useEffect(() => {
     if (isSprite) {
       fetch(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`)
@@ -29,11 +36,19 @@ export default function PokemonImage({ name, isSprite }: { name: string, isSprit
 
   return (
     <>
-      {isSprite ? <img src={imageUrl} alt={`Sprite for ${name}`} style={{ width: '48px', height: '48px' }} /> : <img
-        src={imageUrl}
-        alt={name}
-        style={{ height: "200px", width: "auto" }}
-      />}
+      {isSprite ? (
+        <img
+          src={imageUrl}
+          alt={`Sprite for ${name}`}
+          style={{ width: "48px", height: "48px" }}
+        />
+      ) : (
+        <img
+          src={imageUrl}
+          alt={name}
+          style={{ height: "200px", width: "auto" }}
+        />
+      )}
     </>
   );
 }

@@ -1,10 +1,24 @@
-import { Box, Typography, Button, Grid, Card, CardContent } from '@mui/material';
-import { NavLink } from 'react-router-dom';
+import {
+  Box,
+  Typography,
+  Button,
+  Grid,
+  Card,
+  CardContent,
+} from "@mui/material";
+import { NavLink } from "react-router-dom";
 
 const MainPage = () => {
   const features = [
-    { title: "Pokémon Database", description: "Access a comprehensive database of Pokémon with details on stats, abilities, and more." },
-    { title: "Trainer Hub", description: "Manage and view profiles of top Pokémon trainers." },
+    {
+      title: "Pokémon Database",
+      description:
+        "Access a comprehensive database of Pokémon with details on stats, abilities, and more.",
+    },
+    {
+      title: "Trainer Hub",
+      description: "Manage and view profiles of top Pokémon trainers.",
+    },
   ];
 
   return (
@@ -12,7 +26,7 @@ const MainPage = () => {
       <Box
         sx={{
           padding: 8,
-          textAlign: 'center'
+          textAlign: "center",
         }}
       >
         <Typography variant="h2" gutterBottom>
@@ -21,7 +35,13 @@ const MainPage = () => {
         <Typography variant="h5" gutterBottom sx={{ marginBottom: 4 }}>
           Discover your favorite Pokémon and trainers!
         </Typography>
-        <Button variant="contained" color="warning" size="large" component={NavLink} to="/pokemon">
+        <Button
+          variant="contained"
+          color="warning"
+          size="large"
+          component={NavLink}
+          to="/pokemon"
+        >
           Get Started
         </Button>
       </Box>
@@ -34,9 +54,7 @@ const MainPage = () => {
                 <Typography variant="h5" component="div">
                   {feature.title}
                 </Typography>
-                <Typography variant="body2">
-                  {feature.description}
-                </Typography>
+                <Typography variant="body2">{feature.description}</Typography>
               </CardContent>
             </Card>
           </Grid>
@@ -44,6 +62,6 @@ const MainPage = () => {
       </Grid>
     </Box>
   );
-}
+};
 
 export default MainPage;
