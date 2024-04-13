@@ -1,9 +1,7 @@
 import React from "react";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
-import { Link, Stack } from "@mui/material";
-import { api } from "../../types/app";
-import PokemonInfo from "../pokemon/PokemonInfo";
+import { Link } from "@mui/material";
 
 export default function TrainersTableRow({
   row,
