@@ -308,7 +308,7 @@ async function main() {
       trainerId: 3,
       actions: {
         connect: [
-          { id: 3 },
+          { id: 4 },
           { id: 16 },
           { id: 17 },
         ],
