@@ -1,12 +1,12 @@
-import React from "react";
-import {Action, api, Pokemon} from "../../types/app";
-import {Box, Button, Dialog, Divider, Stack, TextField} from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Action, api, Pokemon } from "../../types/app";
+import { Box, Button, Dialog, Divider, Stack, TextField } from "@mui/material";
 import axios from "axios";
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 export default function PokemonInfo(props: {
 	openState: boolean;
@@ -17,8 +17,9 @@ export default function PokemonInfo(props: {
 		props.setStateFunc(false);
 	};
 
-	const [trainer, setTrainer] = React.useState("Not caught");
-	const [actions, setActions] = React.useState([] as Action[]);
+	const [trainer, setTrainer] = useState("Not caught");
+	const [actions, setActions] = useState([] as Action[]);
+	const [imageUrl, setImageUrl] = useState("");
 
 	if (props.pokemon.trainer) {
 		fetch(`${api}/trainers/${props.pokemon.trainer}`)
@@ -28,7 +29,7 @@ export default function PokemonInfo(props: {
 			});
 	}
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const actionList = props.pokemon.actions;
 
 		const promises = actionList.map((actionID) =>
@@ -38,43 +39,40 @@ export default function PokemonInfo(props: {
 		Promise.all(promises).then((data) => {
 			setActions(data);
 		});
+
+		// Fetch the image
+		fetch(`https://pokeapi.co/api/v2/pokemon/${props.pokemon.name.toLowerCase()}`)
+			.then((response) => response.json())
+			.then((data) => {
+				const img = data.sprites.other["official-artwork"].front_default;
+				const shiny = data.sprites.other["official-artwork"].front_shiny;
+				const rnd = Math.floor(Math.random() * 20);
+				if (rnd == 1 && shiny) {
+					setImageUrl(shiny);
+				} else {
+					setImageUrl(img);
+				}
+			});
 	}, []);
 
 	return (
 		<Dialog open={props.openState} onClose={() => handleClosing()} maxWidth={"md"}>
 			<Stack spacing={1} direction="row">
-				<Box sx={{padding: 1}}>
-					<Stack spacing={2} direction="row" sx={{marginBottom: 2}}>
-						<Stack spacing={2} direction="column" sx={{marginBottom: 2}}>
-							<TextField
-								label="Name"
-								value={props.pokemon.name}
-								disabled
-								fullWidth
-							/>
-							<TextField
-								label="Type"
-								value={props.pokemon.type}
-								disabled
-								fullWidth
-							/>
-							<Stack spacing={2} direction="row" sx={{marginBottom: 2}}>
-								<TextField
-									label="Height"
-									value={props.pokemon.height}
-									disabled
-									fullWidth
-								/>
-								<TextField
-									label="Weight"
-									value={props.pokemon.weight}
-									disabled
-									fullWidth
-								/>
+				<Box sx={{ padding: 1 }}>
+					<Stack spacing={2} direction="row" sx={{ marginBottom: 2 }}>
+						<Stack spacing={2} direction="column" sx={{ marginBottom: 2 }}>
+							<TextField label="Name" value={props.pokemon.name} disabled fullWidth />
+							<TextField label="Type" value={props.pokemon.type} disabled fullWidth />
+							<Stack spacing={2} direction="row" sx={{ marginBottom: 2 }}>
+								<TextField label="Height" value={props.pokemon.height} disabled fullWidth />
+								<TextField label="Weight" value={props.pokemon.weight} disabled fullWidth />
 							</Stack>
 						</Stack>
-						<img src={`https://img.pokemondb.net/artwork/${props.pokemon.name.toLowerCase()}.jpg`}
-							 alt={props.pokemon.name} style={{ height: "200px", width: "auto", borderRadius: 3 }}/>
+						<img
+							src={imageUrl}
+							alt={props.pokemon.name}
+							style={{ height: "200px", width: "auto", borderRadius: 3 }}
+						/>
 					</Stack>
 					<TextField
 						variant="outlined"
@@ -85,22 +83,17 @@ export default function PokemonInfo(props: {
 						fullWidth
 						multiline
 						rows={4}
-						sx={{marginBottom: 2}}
+						sx={{ marginBottom: 2 }}
 					/>
-					<TextField
-						label="Trainer"
-						value={trainer}
-						disabled
-						fullWidth
-					/>
+					<TextField label="Trainer" value={trainer} disabled fullWidth />
 				</Box>
-				<Divider orientation="vertical" flexItem/>
-				<Box sx={{padding: 1}}>
-					<h3 style={{marginBottom: 10}}>Actions</h3>
+				<Divider orientation="vertical" flexItem />
+				<Box sx={{ padding: 1 }}>
+					<h3 style={{ marginBottom: 10 }}>Actions</h3>
 					{actions.map((action) => (
-						<Accordion key={action.id}>
+						<Accordion key={action.id} sx={{ maxWidth: 500 }}>
 							<AccordionSummary
-								expandIcon={<ExpandMoreIcon/>}
+								expandIcon={<ExpandMoreIcon />}
 								aria-controls={`action${action.id}-content`}
 								id={`action${action.id}-header`}
 							>
@@ -113,28 +106,26 @@ export default function PokemonInfo(props: {
 							</AccordionDetails>
 						</Accordion>
 					))}
-					{actions.length === 0 && <Accordion disabled>
-						<AccordionSummary
-							aria-controls="no-actions-content"
-							id="no-actions-header"
-							sx={{ minWidth: 300 }}
-						>
-							<Typography>No actions</Typography>
-						</AccordionSummary>
-					</Accordion>}
+					{actions.length === 0 && (
+						<Accordion disabled>
+							<AccordionSummary
+								aria-controls="no-actions-content"
+								id="no-actions-header"
+								sx={{ minWidth: 300 }}
+							>
+								<Typography>No actions</Typography>
+							</AccordionSummary>
+						</Accordion>
+					)}
 				</Box>
 			</Stack>
 
-			<Box sx={{padding: 1}}>
-                <Stack spacing={2} direction="row" sx={{float: "right"}}>
-                    <Button
-                        variant="contained"
-                        color="error"
-                        onClick={() => handleClosing()}
-                    >
-                        Close
-                    </Button>
-                </Stack>
+			<Box sx={{ padding: 1 }}>
+				<Stack spacing={2} direction="row" sx={{ float: "right" }}>
+					<Button variant="contained" color="error" onClick={() => handleClosing()}>
+						Close
+					</Button>
+				</Stack>
 			</Box>
 		</Dialog>
 	);
