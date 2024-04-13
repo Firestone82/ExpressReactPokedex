@@ -17,7 +17,6 @@ model Pokemon {
   description String
   weight      Float
   height      Float
-  image       String
   createdAt   DateTime @default(now())
   actions     Action[] @relation("PokemonActions")
   trainer     Trainer? @relation(fields: [trainerId], references: [id])

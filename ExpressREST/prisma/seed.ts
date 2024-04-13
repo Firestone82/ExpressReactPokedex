@@ -95,7 +95,6 @@ async function main() {
         "Pikachu, an Electric-type Pokémon, is known for its ability to generate powerful electric shocks. It's friendly and easily recognizable by its yellow fur and lightning-shaped tail.",
       weight: 6.0,
       height: 0.4,
-      image: "https://example.com/images/pikachu.jpg",
       createdAt: "2024-03-21T00:00:00Z",
       trainerId: 1,
       actions: {
@@ -112,7 +111,6 @@ async function main() {
         "Charizard flies around the sky in search of powerful opponents. It breathes fire of such great heat that it melts anything. However, it never turns its fiery breath on any opponent weaker than itself.",
       weight: 90.5,
       height: 1.7,
-      image: "https://example.com/images/charizard.jpg",
       createdAt: "2024-03-21T00:00:00Z",
       trainerId: 2,
       actions: {
@@ -129,7 +127,6 @@ async function main() {
         "A strange seed was planted on its back at birth. The plant sprouts and grows with this Pokémon.",
       weight: 6.9,
       height: 0.7,
-      image: "https://example.com/images/bulbasaur.jpg",
       createdAt: "2024-03-21T00:00:00Z",
       trainerId: 3,
       actions: {
@@ -146,7 +143,6 @@ async function main() {
         "Squirtle's shell is not merely used for protection. The shell's rounded shape and the grooves on its surface help minimize resistance in water, enabling this Pokémon to swim at high speeds.",
       weight: 9.0,
       height: 0.5,
-      image: "https://example.com/images/squirtle.jpg",
       createdAt: "2024-03-21T00:00:00Z",
       trainerId: 4,
       actions: {
@@ -163,7 +159,6 @@ async function main() {
         "It has the ability to sense the Auras of all things. It understands human speech.",
       weight: 54.0,
       height: 1.2,
-      image: "https://example.com/images/lucario.jpg",
       createdAt: "2024-03-21T00:00:00Z",
       trainerId: null,
       actions: {

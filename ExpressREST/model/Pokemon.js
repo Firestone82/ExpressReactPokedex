@@ -6,7 +6,6 @@ class Pokemon {
     description,
     weight,
     height,
-    image,
     createdAt,
     actions,
     trainer = null,
@@ -17,7 +16,6 @@ class Pokemon {
     this.description = description;
     this.weight = weight;
     this.height = height;
-    this.image = image;
     this.createdAt = createdAt;
     this.actions = actions;
     this.trainer = trainer;
@@ -31,7 +29,6 @@ class Pokemon {
       entry.description,
       entry.weight,
       entry.height,
-      entry.image,
       entry.createdAt,
       entry.actions || [],
       entry.trainer || null,
