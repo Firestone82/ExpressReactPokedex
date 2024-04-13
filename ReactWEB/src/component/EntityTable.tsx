@@ -19,6 +19,10 @@ import TrainersTableRow from "./trainers/TrainersTableRow";
 import TrainersTableHeader from "./trainers/TrainersTableHeader";
 
 async function requestAPI(entityType: string, page: number, rowsPerPage: number) {
+  if (rowsPerPage == -1) {
+    rowsPerPage = 1000; // Quick fix for getting all rows.
+  }
+
   return axios
     .get(
       `${api}/${entityType}?page=${page}&limit=${rowsPerPage}&lazy=true`,
