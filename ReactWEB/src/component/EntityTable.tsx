@@ -28,7 +28,7 @@ async function requestAPI(
   }
 
   return axios
-    .get(`${api}/${entityType}?page=${page}&limit=${rowsPerPage}&lazy=true`)
+    .get(`${api}/${entityType}?offset=${page}&limit=${rowsPerPage}&lazy=true`)
     .then((response) => {
       return response.data;
     });
@@ -157,8 +157,7 @@ export default function EntityTable(props: { entityType: string }) {
 
     requestAPI(props.entityType, 0, -1).then((data) => {
       const rows = data.entries as Entity[];
-      const jsonContent =
-        "data:text/json;charset=utf-8," + JSON.stringify(rows, null, 2);
+      const jsonContent = "data:text/json;charset=utf-8," + JSON.stringify(rows, null, 2);
       const encodedUri = encodeURI(jsonContent);
       const link = document.createElement("a");
       link.setAttribute("href", encodedUri);
@@ -210,10 +209,7 @@ export default function EntityTable(props: { entityType: string }) {
             <TrainersTableHeader />
           )}
           <TableBody>
-            {(rowsPerPage > 0
-              ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              : rows
-            ).map((row) =>
+            {rows.map((row) =>
               props.entityType === "pokemon" ? (
                 <PokemonTableRow
                   key={row.id}
@@ -231,7 +227,7 @@ export default function EntityTable(props: { entityType: string }) {
               ),
             )}
             {emptyRows > 0 && (
-              <TableRow style={{ height: 73 * emptyRows }}>
+              <TableRow style={{ height: 20 * emptyRows }}>
                 <td colSpan={9} />
               </TableRow>
             )}
