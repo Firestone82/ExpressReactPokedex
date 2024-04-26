@@ -35,7 +35,7 @@ export default function PokemonImage({
           }
         })
         .catch(() => {
-          setImageUrl("https://art.ngfiles.com/images/386000/386577_stardoge_8-bit-pokeball.png");
+          setImageUrl("https://static.wikia.nocookie.net/pokemon-fano/images/6/6f/Poke_Ball.png");
         });
     }
   }, [name, isSprite]);

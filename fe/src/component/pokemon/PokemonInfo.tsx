@@ -21,13 +21,15 @@ export default function PokemonInfo(props: {
   const [trainer, setTrainer] = useState("Not caught");
   const [actions, setActions] = useState([] as Action[]);
 
-  if (props.pokemon.trainer) {
-    fetch(`${api}/trainers/${props.pokemon.trainer}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setTrainer(data.name);
-      });
-  }
+  useEffect(() => {
+    if (props.pokemon.trainer) {
+      fetch(`${api}/trainers/${props.pokemon.trainer}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setTrainer(data.name);
+        });
+    }
+  }, []);
 
   useEffect(() => {
     const actionList = props.pokemon.actions;
@@ -39,7 +41,7 @@ export default function PokemonInfo(props: {
     Promise.all(promises).then((data) => {
       setActions(data);
     });
-  });
+  }, []);
 
   return (
     <Dialog
