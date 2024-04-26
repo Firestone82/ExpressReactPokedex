@@ -17,6 +17,9 @@ export default function PokemonImage({
         .then((response) => response.json())
         .then((data) => {
           setImageUrl(data.sprites.front_default);
+        })
+        .catch(() => {
+          setImageUrl("https://art.ngfiles.com/images/386000/386577_stardoge_8-bit-pokeball.png");
         });
     } else {
       fetch(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`)
@@ -30,6 +33,9 @@ export default function PokemonImage({
           } else {
             setImageUrl(img);
           }
+        })
+        .catch(() => {
+          setImageUrl("https://art.ngfiles.com/images/386000/386577_stardoge_8-bit-pokeball.png");
         });
     }
   }, [name, isSprite]);

@@ -197,6 +197,7 @@ function PokemonForm(props: {
             rows={4}
             fullWidth
             sx={{ marginBottom: 2 }}
+            required
           />
 
           <Stack spacing={2} direction="row" sx={{ float: "right" }}>

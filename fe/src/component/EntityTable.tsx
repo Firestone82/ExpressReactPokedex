@@ -6,7 +6,7 @@ import TableFooter from "@mui/material/TableFooter";
 import { api, Entity, Pokemon, Trainer } from "../types/app";
 import axios from "axios";
 import { Stack, TableRow } from "@mui/material";
-import { useSnackbar } from "notistack";
+import { enqueueSnackbar, useSnackbar } from "notistack";
 import Button from "@mui/material/Button";
 import SystemUpdateAltIcon from "@mui/icons-material/SystemUpdateAlt";
 import CatchingPokemonIcon from "@mui/icons-material/CatchingPokemon";
@@ -31,6 +31,15 @@ async function requestAPI(
     .get(`${api}/${entityType}?offset=${page}&limit=${rowsPerPage}&lazy=true`)
     .then((response) => {
       return response.data;
+    })
+    .catch((error) => {
+      enqueueSnackbar("Failed to fetch data!\nFor more info check console!", {
+        variant: "error",
+        autoHideDuration: 2000,
+        anchorOrigin: { vertical: "top", horizontal: "right" },
+      })
+
+      return { entries: [], pagination: { total: 0 } };
     });
 }
 
