@@ -109,7 +109,7 @@ export default function EntityTable(props: { entityType: string }) {
         });
 
         enqueueSnackbar("Deleted successfully!", {
-          variant: "error",
+          variant: "success",
           autoHideDuration: 1500,
           anchorOrigin: { vertical: "top", horizontal: "right" },
         });

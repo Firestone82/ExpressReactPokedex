@@ -1,15 +1,6 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Button,
-  Dialog,
-  FormControl,
-  InputLabel,
-  Select,
-  Stack,
-  TextField,
-} from "@mui/material";
-import { Pokemon, PokemonType, api } from "../../types/app";
+import { Box, Button, Dialog, FormControl, InputLabel, Select, Stack, TextField } from "@mui/material";
+import { api, Pokemon, PokemonType } from "../../types/app";
 import MenuItem from "@mui/material/MenuItem";
 import axios from "axios";
 import { enqueueSnackbar } from "notistack";
@@ -97,7 +88,14 @@ function PokemonForm(props: {
         }
       })
       .catch((error) => {
-        console.error(error);
+        enqueueSnackbar(
+          `Error ${pokemonID == 0 ? "creating" : "editing"} Pokémon!`,
+          {
+            variant: "error",
+            autoHideDuration: 1500,
+            anchorOrigin: { vertical: "top", horizontal: "right" },
+          },
+        );
       });
   }
 
