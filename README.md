@@ -1,7 +1,7 @@
-<img width="16%" src="assets/icon.png" align="right" alt="Icon">
+<img width="20%" src="assets/icon.png" align="right" alt="Icon">
 <br>
 
-# Project for VAJ (Express REST with React)
+# Project for VAJ: Express REST with React
 - Author: Pavel Mikula (MIK0486)
 - Author: Miroslav Osoba (OSO0008)
 - Took approximately 20 hours
@@ -46,27 +46,28 @@ Selected theme of this project, were pokemons. Using REST we are able to do basi
         - README, Prettier, Able to run the whole project easily! 
 
 ## Instalation
-Using docker-compose
+### Using docker-compose
 ```bash
 docker-compose up
 ```
 
-Express JS (REST API)
-```bash
-npm install
-npx prisma migrate dev --name init
-npm run start
-```
-```bash
-npx prisma studio -- Use to start database browsing
-npx prisma migrate reset -- Use only to reset database
-```
+### Manually
+* Express JS (REST API)
+    ```bash
+    npm install
+    npx prisma migrate dev --name init
+    npm run start
+    ```
+    ```bash
+    npx prisma studio -- Use to start database browsing
+    npx prisma migrate reset -- Use only to reset database
+    ```
 
-React (Single Page)
-```bash
-npm install
-npm run start
-```
+* React (Single Page)
+    ```bash
+    npm install
+    npm run start
+    ```
 
 ## API Usage / Examples
 **GET -** http://localhost:3000/pokemon?lazy=true - *Returns paginated lazy entries*
