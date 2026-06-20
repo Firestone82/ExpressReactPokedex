@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="assets/icon.png" alt="ExpressReactPokedex" width="120">
-</p>
+<img width="15%" src="assets/icon.png" align="right" alt="Icon">
 
 # ExpressReactPokedex
 
