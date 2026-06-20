@@ -1,175 +1,95 @@
-<img width="20%" src="assets/icon.png" align="right" alt="Icon">
-<br>
+<img width="15%" src="assets/icon.png" align="right" alt="Icon">
 
-# Project for VAJ: Express REST with React
-- Author: Pavel Mikula (MIK0486)
-- Author: Miroslav Osoba (OSO0008)
-- Took approximately 20 hours
+# ExpressReactPokedex
 
-## Project Theme
-This project is simple web page made by React, that communicates with NodeJS Express REST API.
-Selected theme of this project, were pokemons. Using REST we are able to do basic CRUD operations containing pagination and lazy loading, next to there are special requests.
+> **VŠB-TUO** — School project · Web Application Development (VAJ)
 
-## System Requirements
-- Prisma 5.11+
-- Express 4.16.1+
-- Node/NPM
+![TypeScript](https://img.shields.io/badge/TypeScript-blue) ![React](https://img.shields.io/badge/Frontend-React-61DAFB) ![Express](https://img.shields.io/badge/Backend-Express-green)
 
-## Project Requirements
-- Back-end (NodeJS):
-    - [x] 5 Functional requirements
-        - At least 2 resources (2 tables connected to each other via key)
-        - All CRUD operations on one resource
-        - At least 2 operations on second resource
-    - [x] 5 ORM Layer
-        - Connection to the DB via a ORM library 
-        - Error handling
-    - [x] 5 Express REST API layer 
-        - Valid API up to the REST specification for all operations on resources
-        - Status handling & error messages
-- Front-end (React):
-    - [x] 5 Functional requirements
-        - App Layout with Navigation (Routing)
-        - Main page with information about the app
-        - All CRUD operations on one resource (Create Form, Edit Form, List/Table, Delete, Detail View) 
-    - [x] 5 Component structure
-        - Split your application into several components. Don’t make huge ones. 
-    - [x] 5 Client-side routing
-        - There should be proper routes for all pages
-        - Best practices according to react router 
-    - [x] 5 Data fetching
-        - Custom API functions
-        - Proper loading states
-        - Proper error handling / states 
-- Overall:
-    - 5 Code quality / project setup
-        - README, Prettier, Able to run the whole project easily! 
+A Pokémon-themed full-stack web application. The backend is a Node.js/Express REST API with Prisma ORM; the frontend is a React SPA with routing, pagination, and lazy loading.
 
-## Instalation
-### Using docker-compose
-```bash
-docker-compose up
-```
+**Authors:** Pavel Mikula, Miroslav Osoba
 
-### Manually
-* Express JS (REST API)
-    ```bash
-    npm install
-    npx prisma migrate dev --name init
-    npm run start
-    ```
-    ```bash
-    npx prisma studio -- Use to start database browsing
-    npx prisma migrate reset -- Use only to reset database
-    ```
+## Features
 
-* React (Single Page)
-    ```bash
-    npm install
-    npm run start
-    ```
+- RESTful API with proper HTTP status codes and error handling
+- Pokémon CRUD with paginated listing and detail views
+- Trainer management with catch/release mechanics
+- React Router navigation with component-based architecture
+- Prisma ORM with SQLite (easily switchable to PostgreSQL)
+- Docker Compose for one-command setup
 
-## API Usage / Examples
-**GET -** http://localhost:3000/pokemon?lazy=true - *Returns paginated lazy entries*
+## Requirements
+
+- Node.js 18+ and npm
+- Docker *(optional)*
+
+## Setup
+
+### With Docker (recommended)
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Firestone82/ExpressReactPokedex.git
+   cd ExpressReactPokedex
+   ```
+
+2. Start all services:
+   ```bash
+   docker-compose up --build
+   ```
+
+   - Frontend: `http://localhost:3000`
+   - API: `http://localhost:4000`
+
+### Manual
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Firestone82/ExpressReactPokedex.git
+   cd ExpressReactPokedex
+   ```
+
+2. Start the backend:
+   ```bash
+   cd backend
+   npm install
+   npx prisma migrate dev --name init
+   npm run start
+   ```
+
+3. Start the frontend (new terminal):
+   ```bash
+   cd frontend
+   npm install
+   npm run start
+   ```
+
+## API Reference
+
+**GET** `/pokemon?lazy=true` — Paginated Pokémon list
 ```json
 {
-    "entries": [
-        {
-            "id": 1,
-            "name": "Pikachu",
-            "type": "Electric",
-            "description": "Pikachu, an Electric-type Pokémon, is known for its ability to generate powerful electric shocks. It's friendly and easily recognizable by its yellow fur and lightning-shaped tail.",
-            "createdAt": "2024-03-21T00:00:00.000Z",
-            "actions": [
-                1
-            ],
-            "trainer": 1
-        },
-        ...
-    ],
-    "pagination": {
-        "limit": 10,
-        "offset": 0,
-        "current": 10,
-        "total": 11
-    }
+  "entries": [{ "id": 1, "name": "Pikachu", "type": "Electric", ... }],
+  "pagination": { "limit": 10, "offset": 0, "current": 10, "total": 11 }
 }
 ```
-**GET -** http://localhost:3000/pokemon/1 - *Returns single entry*
+
+**GET** `/pokemon/1` — Single Pokémon with actions and trainer
+
+**POST** `/pokemon` — Create a new Pokémon
 ```json
-{
-    "id": 1,
-    "name": "Pikachu",
-    "type": "Electric",
-    "description": "Pikachu, an Electric-type Pokémon, is known for its ability to generate powerful electric shocks. It's friendly and easily recognizable by its yellow fur and lightning-shaped tail.",
-    "weight": 6,
-    "height": 0.4,
-    "image": "https://example.com/images/pikachu.jpg",
-    "createdAt": "2024-03-21T00:00:00.000Z",
-    "actions": [
-        {
-            "id": 1,
-            "name": "Thunderbolt",
-            "type": "Electric",
-            "description": "A strong electric attack that may also leave the target with paralysis.",
-            "damage": 90,
-            "createdAt": "2024-03-21T00:00:00.000Z"
-        }
-    ],
-    "trainer": {
-        "id": 1,
-        "name": "Ash Ketchum",
-        "email": "ash.ketchum@example.com",
-        "password": "securePassword123",
-        "createdAt": "2024-03-21T00:00:00.000Z",
-        "deletedAt": null
-    }
-}
+{ "name": "Eevee", "type": "Normal", "weight": 6.5, "height": 0.3, "actions": [2], "trainer": 1 }
 ```
-**POST -**  http://localhost:3000/pokemon - *Creates mew pokemon*
-```json
-{
-    "name": "Eevee",
-    "type": "Normal",
-    "description": "Eevee has an unstable genetic makeup that suddenly mutates due to the environment in which it lives. Radiation from various stones causes this Pokémon to evolve.",
-    "weight": 6.5,
-    "height": 0.3,
-    "image": "https://example.com/images/eevee.jpg",
-    "actions": [2],
-    "trainer": 1
-}
-```
-**GET -** http://localhost:3000/actions - *Returns all actions*
-```json
-{
-    "entries": [
-        {
-            "id": 1,
-            "name": "Thunderbolt",
-            "type": "Electric",
-            "description": "A strong electric attack that may also leave the target with paralysis.",
-            "damage": 90,
-            "createdAt": "2024-03-21T00:00:00.000Z"
-        },
-        ...
-    ]
-}
-```
-**GET -** http://localhost:3000/trainers - *Returns all trainers*
-```json
-{
-    "entries": [
-        {
-            "id": 1,
-            "name": "Ash Ketchum",
-            "email": "ash.ketchup@gmail.com",
-            "password": "securePassword123",
-            "createdAt": "2024-03-21T00:00:00.000Z",
-            "deletedAt": null
-        },
-        ...
-    ]
-}
-```
-**POST -** http://localhost:3000/trainers/1/catch/1 - *Catches new pokemon* <br>
-**POST -** http://localhost:3000/trainers/1/release/1 - *Releases pokemon*
+
+**GET** `/actions` — All available actions
+
+**GET** `/trainers` — All trainers
+
+**POST** `/trainers/1/catch/1` — Trainer catches a Pokémon
+
+**POST** `/trainers/1/release/1` — Trainer releases a Pokémon
+
+## License
+
+This project was created as a school assignment at VŠB-TUO.
